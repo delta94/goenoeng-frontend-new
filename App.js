@@ -19,9 +19,11 @@ const instructions = Platform.select({
 
 import Transaction from './src/screens/Transaction'
 import History from './src/screens/History'
+// import Chats from './src/screens/Chats'
 
 
 const AppNavigator = createStackNavigator({
+  // Chats: { screen:Chats },
   History: { screen: History },
 	Transaction: { screen: Transaction },  
 },

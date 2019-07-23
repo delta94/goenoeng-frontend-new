@@ -78,10 +78,12 @@ class Transaction extends Component {
                     renderItem={({ item, total }) => {
                         return (
                             <View style={styles.flatList}>
-                                <Text style={{ fontSize: 17, color: '#ffffff', }}>{item.namaToko}</Text>
-                                <Text style={{ fontSize: 20, color: '#ffff00', }}>{this.priceFormat(item.harga)}</Text>
-                                <Text style={{ fontSize: 15, color: '#ffffff', }}>Tanggal pinjam {item.tanggalPinjam}</Text>
-                                <Text style={{ fontSize: 15, color: '#ffffff', }}>Tanggal harus kembali {item.tanggalKembali}</Text>
+                                <View style={{ flexDirection: 'row'}}>
+                                    <Text style={{ justifyContent: 'flex-end', fontSize: 17, color: '#ffffff', flex: 4 }}>{item.namaToko}</Text>
+                                    <Text style={{ fontSize: 20, color: '#ffff00', flex: 3 }}>{this.priceFormat(item.harga)}</Text>
+                                </View>
+                                <Text style={{ fontSize: 15, color: '#ffffff', }}>Tanggal peminjaman {item.tanggalPinjam}</Text>
+                                <Text style={{ fontSize: 15, color: '#ffffff', }}>Tanggal pengembalian {item.tanggalKembali}</Text>
                             </View>
                         )
                     }
