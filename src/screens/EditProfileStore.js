@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
     View, Text, StyleSheet, Dimensions, ImageBackground, TextInput, TouchableOpacity, KeyboardAvoidingView
 } from 'react-native';
-import style from '../Assets/styles'
+import style from '../Assets/Style'
 import { ScrollView } from 'react-native-gesture-handler';
 
 const widthWindow = Dimensions.get('window').width

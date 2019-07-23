@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
     View, Text, StyleSheet, Dimensions, ImageBackground, TextInput, TouchableOpacity
 } from 'react-native';
-import style from '../Assets/styles'
+import style from '../Assets/Style'
 
 const widthWindow = Dimensions.get('window').width
 class StoreProfile extends Component {

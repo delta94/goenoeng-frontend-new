@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { TouchableOpacity, View, Text, StyleSheet, Dimensions, ImageBackground, FlatList, SectionList } from 'react-native'
 import { Product } from '../Assets/dummy'
 import { connect } from 'react-redux'
-import styles from '../Assets/styles'
+import styles from '../Assets/Style'
 
 class ProductList extends Component {
     constructor(props) {

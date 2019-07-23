@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Platform, Text, View, TextInput, ImageBackground, TouchableOpacity } from 'react-native';
-import styles from '../Assets/styles'
+import styles from '../Assets/Style'
 import ProductList from '../components/ProductList'
 
 export default class Mountain extends Component {

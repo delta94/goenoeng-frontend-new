@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Platform, Text, View, TextInput, ImageBackground, TouchableOpacity } from 'react-native';
-import styles from '../Assets/styles'
+import styles from '../Assets/Style'
 
 export default class AddProduct extends Component {
     render() {

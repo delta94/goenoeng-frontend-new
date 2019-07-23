@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Platform, Text, View, Dimensions, Image } from 'react-native';
+import { Platform, Text, View, Dimensions, Image, TouchableOpacity } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
-import styles from '../Assets/styles'
+import styles from '../Assets/Style'
 import { carousel } from '../Assets/dummy'
 
 const windowWidth = Dimensions.get('window').width
@@ -53,9 +53,10 @@ export default class CarouselView extends Component {
                 style={styles.carouselImage}
 
             />
-            <View style={styles.buttonMore}>
+            <TouchableOpacity style={styles.buttonMore}
+            onPress={ () => this.props.navigation.navigate('Mountain') } >
                 <Text style={styles.viewMore}>View More</Text>
-            </View>
+            </TouchableOpacity>
         </View>
 
     )
