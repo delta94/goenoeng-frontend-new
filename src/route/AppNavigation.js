@@ -15,13 +15,13 @@ import ProfileStore from '../screens/StoreProfile'
 import EditProfileUser from '../screens/EditProfile'
 import EditProfileStore from '../screens/EditProfileStore'
 import ManageProduct from '../screens/ManageProduct'
+import Transaction from '../screens/Transaction'
 
 const BottomNavigation = createBottomTabNavigator(
   {
     Home: Home,
-    Store: Store,
-    Receipt: Receipt,
-    Maps: Maps,
+    Transaksi: Transaction,
+    Profile: ProfileUser,
   },
   {
 
@@ -34,7 +34,7 @@ const AppNavigator = createStackNavigator({
     screen: BottomNavigation
   },
   Store: {
-    screen: BottomNavigation
+    screen: Store
   },
   DetailProduct: {
     screen: DetailProduct
@@ -69,6 +69,12 @@ const AppNavigator = createStackNavigator({
   ProfileStore: {
     screen: ProfileStore
   },
+  Transaction: {
+    screen: Transaction
+  },
+  Receipt: {
+    screen: Receipt
+  }
 }, {
     headerMode: 'none',
     navigationOptions: {
