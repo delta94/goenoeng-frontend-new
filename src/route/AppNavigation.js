@@ -3,26 +3,31 @@ import {createAppContainer, createBottomTabNavigator ,createStackNavigator} from
 import Dummy from '../screens/dummy';
 import Login from '../screens/Login';
 import SignUp from '../screens/SignUp/Index';
+import Gateway from '../screens/Payment/Gateway';
+import Receipt from '../screens/Payment/Receipt';
 
 const BottomNavigation = createBottomTabNavigator(
 	{
-		Dummy: Dummy,
+		Dummy: Receipt,
 	},
 	{
         
-    }
+  }
 );
 
 
 const AppNavigator = createStackNavigator({
+    Dummy: {
+      screen: BottomNavigation
+    },
+    Gateway: {
+      screen: Gateway
+    },
     Login: {
       screen: Login
     },
     SignUp: {
       screen: SignUp
-    },
-    Dummy: {
-      screen: BottomNavigation
     },
   }, {
     headerMode: 'none',

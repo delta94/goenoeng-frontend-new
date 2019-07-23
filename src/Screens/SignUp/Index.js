@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, TextInput, View, Button, TouchableOpacity, StatusBar, Image, Dimensions } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, TouchableOpacity, StatusBar, Dimensions } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import UserScreen from './User';
 import MitraScreen from './Mitra';

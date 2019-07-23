@@ -26,7 +26,7 @@ export default class Login extends Component {
 					/>
 					<TextInput
 						secureTextEntry
-						placeholder    ="Password"
+						placeholder    ="Kata Sandi"
 						autoCapitalize ="none"
 						style          ={[styles.textInput]}
 						onChangeText   ={password => this.setState({ password })}
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
 		height         : 50,
 		width          : '80%',
 		backgroundColor: '#00000010',
-		borderRadius   : 12,
+		borderRadius   : 4,
 		paddingLeft    : 15,
 		paddingRight   : 15,
 	},
