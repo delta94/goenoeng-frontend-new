@@ -1,12 +1,15 @@
-import React, { Component } from 'react';
-import NavigatorFunction from './src/Screens/NavigatorFunction';
+import React, {Component} from 'react'
+import store from './src/public/redux/store';
+import BottomNavigation from './src/route/AppNavigation'
+import {Provider} from 'react-redux';
 
-export default class App extends Component {
+export default class App extends Component{
   render() {
     return (
-      
-        <NavigatorFunction/>
-      
-    );
+      <Provider store={store}>
+        
+        <BottomNavigation/>
+       </Provider>
+    )
   }
 }
