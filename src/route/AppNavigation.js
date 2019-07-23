@@ -5,9 +5,9 @@ import Login from '../screens/Login';
 import SignUp from '../screens/SignUp/Index';
 import Gateway from '../screens/Payment/Gateway';
 import Receipt from '../screens/Payment/Receipt';
-import Store from '../Screens/Store';
-import DetailProduct from '../Screens/DetailProduct';
-import Maps from '../Screens/Maps';
+import Store from '../screens/Store';
+import DetailProduct from '../screens/DetailProduct';
+import Maps from '../screens/Maps';
 import Home from '../screens/Home'
 import Mountain from '../screens/Mountain'
 import ProfileUser from '../screens/Profile'
@@ -30,6 +30,9 @@ const BottomNavigation = createBottomTabNavigator(
 
 
 const AppNavigator = createStackNavigator({
+  Home: {
+    screen: BottomNavigation
+  },
   Store: {
     screen: BottomNavigation
   },
@@ -38,9 +41,6 @@ const AppNavigator = createStackNavigator({
   },
   Maps: {
     screen: Maps
-  },
-  Dummy: {
-    screen: BottomNavigation
   },
   Gateway: {
     screen: Gateway
@@ -68,12 +68,6 @@ const AppNavigator = createStackNavigator({
   },
   ProfileStore: {
     screen: ProfileStore
-  },
-  Home: {
-    screen: BottomNavigation
-  },
-  Dummy: {
-    screen: BottomNavigation
   },
 }, {
     headerMode: 'none',
