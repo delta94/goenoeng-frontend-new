@@ -159,7 +159,7 @@ module.exports = StyleSheet.create({
         borderRadius: 10,
         borderColor: '#03AC0E',
         borderWidth: 2,
-        width: widthWindow/1.2,
+        width: widthWindow/1.33,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -167,13 +167,13 @@ module.exports = StyleSheet.create({
         },
         shadowOpacity: 0.23,
         shadowRadius: 0.62,
-
+        marginRight: 15,
         elevation: 1,
         backgroundColor:'#f0f0f0',
         alignSelf: "center",
         padding:5
     },
-    iconBox:{
+    iconBox2:{
         position: 'absolute',
         right: -2,
         top: -2,
@@ -185,6 +185,17 @@ module.exports = StyleSheet.create({
         height: 50, 
         width: 50,
         zIndex:5
+    },
+    iconBox3:{
+        borderColor: '#03AC0E',
+        borderWidth: 2,
+        borderRadius: 10,
+        height: 50, 
+        width: 50,
+        zIndex:6,
+        marginTop: 20,
+        // marginRight: 5
+        marginLeft: 15
     },
     itemMount: {
         height: 200,
@@ -202,6 +213,26 @@ module.exports = StyleSheet.create({
         borderColor: 'white',
         borderWidth: 8,
         overflow: 'hidden'
+    },
+    ProductImage:{
+        height: 100, 
+        width: 120,
+        // position: 'absolute',
+        // right: -30,
+        borderRadius: 20,
+        borderColor: 'white',
+        borderWidth: 8,
+        marginTop: 8,
+        overflow: 'hidden',
+        marginRight: 5
+    },
+    productTitle:{
+        position: 'absolute',
+        color: 'white',
+        fontSize : 18,
+        fontWeight: 'bold',
+        alignSelf: 'center',
+        top: 5
     },
     listStyle:{
         marginTop:15, 
@@ -237,5 +268,153 @@ module.exports = StyleSheet.create({
         // marginLeft: 15,
         // marginTop: 5,
         marginBottom: 3
-    }
+    },
+    backgroundUp: {
+        // backgroundColor:
+        height: heightWindow / 3,
+        width: widthWindow,
+        backgroundColor: '#39db62',
+        position: 'absolute',
+        top: 0,
+        zIndex: 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+        // bordra
+        // flexDirection: 'row'
+      },
+      imageIcon: {
+        height: 25,
+        width: 25
+      },
+      backgroundDown: {
+        height: heightWindow / 2,
+        width: widthWindow,
+        backgroundColor: 'white',
+        position: 'absolute',
+        top: heightWindow / 2,
+        zIndex: 1
+      },
+      detailTextBox:{
+        flexDirection: 'row',
+        borderColor: '#34c759',
+        borderBottomWidth: 3,
+        alignItems: 'center',
+        marginTop: 15
+      },
+      iconBox: {
+        width: 35,
+        height: 35,
+        backgroundColor: '#34c759',
+        borderTopRightRadius: 20,
+        justifyContent: 'center',
+        alignItems: 'center'
+      },
+      imageBox: {
+        width: 110,
+        height: 110,
+        borderRadius: 100,
+        backgroundColor: 'white',
+        overflow: "hidden",
+        borderColor: 'white',
+        borderWidth: 5,
+        marginTop: -40
+        // zIndex: 
+        // backgroundImage: 'url(../Assets/icon/home.png)',
+      },
+      imageBox2: {
+        width: 50,
+        height: 50,
+        borderRadius: 100,
+        backgroundColor: 'white',
+        overflow: "hidden",
+        borderColor: 'white',
+        borderWidth: 5,
+        position: 'absolute',
+        top: -10,
+        right: -60,
+        // marginTop: -40
+        // zIndex: 
+        // backgroundImage: 'url(../Assets/icon/home.png)',
+      },
+      loginBox: {
+        backgroundColor: 'white',
+        position: 'absolute',
+        zIndex: 10,
+        borderColor: '#34c759',
+        borderWidth: 4,
+        height: heightWindow / 1.5
+        ,
+        width: widthWindow - 100,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 3,
+        },
+        shadowOpacity: 0.27,
+        shadowRadius: 4.65,
+    
+        elevation: 6,
+        top: heightWindow / 4,
+        alignSelf: 'center',
+        borderRadius: 10,
+      },
+      loginText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginTop: 10,
+        textAlign: 'center',
+        marginBottom: 10,
+        color: '#39db62'
+        //   alignSelf: 'center'
+      },
+      textTop: {
+        color: '#39db62',
+        marginLeft: 10,
+        fontWeight: 'bold',
+        fontSize: 15,
+        width: 200
+        // alignSelf: 'stretch'
+      },
+      line: {
+        borderColor: 'grey',
+        borderBottomWidth: 1,
+        width: widthWindow - 150,
+        alignSelf: 'center',
+        marginBottom: 15
+      },
+      TextInput: {
+        marginLeft: 20
+      },
+      button: {
+        width: widthWindow - 140,
+        height: 50,
+        alignSelf: 'center',
+        backgroundColor: 'rgba(45, 173, 78, 0.8)',
+        position: 'absolute',
+        borderTopLeftRadius: 50,
+        borderTopRightRadius: 50,
+        zIndex: 10,
+        bottom: 0,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 12,
+        },
+        shadowOpacity: 0.58,
+        shadowRadius: 16.00,
+    
+        elevation: 24,
+      },
+      buttonAddProduct: {
+        width: widthWindow - 250,
+        height: 50,
+        // alignSelf: 'center',
+        backgroundColor: 'rgba(45, 173, 78, 0.8)',
+        // position: 'absolute',
+        borderRadius: 10,
+        zIndex: 10,
+        marginTop: 20,
+        // bottom: 60,
+        elevation: 5,
+      }
 });

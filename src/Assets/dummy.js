@@ -117,10 +117,55 @@ export const shopList2 = [
                 image: 'https://res.cloudinary.com/dvyonb6zt/image/upload/v1563820302/Product/a_xtjh52.jpg',
                 harga: "Rp. 120"
             },
-            
-            
+
+
         ]
     }
+]
+
+export const Product = [
+    {
+        name: "tenda",
+        description: "Ease the cramped style of tight tent quarters with the space-maximum Tungsten UL 3P",
+        stock: 5,
+        image: 'https://res.cloudinary.com/dvyonb6zt/image/upload/v1563820394/Product/e_kd0uoj.jpg',
+        harga: "Rp. 120"
+    },
+    {
+        name: "kompor portable",
+        description: "Ease the cramped style of tight tent quarters with the space-maximum Tungsten UL 3P",
+        stock: 5,
+        image: 'https://res.cloudinary.com/dvyonb6zt/image/upload/v1563820360/Product/c_mfdgvb.jpg',
+        harga: "Rp. 150"
+    },
+    {
+        name: "matras",
+        description: "Ease the cramped style of tight tent quarters with the space-maximum Tungsten UL 3P",
+        stock: 5,
+        image: 'https://res.cloudinary.com/dvyonb6zt/image/upload/v1563820302/Product/a_xtjh52.jpg',
+        harga: "Rp. 350"
+    },
+    {
+        name: "kompor portable",
+        description: "Ease the cramped style of tight tent quarters with the space-maximum Tungsten UL 3P",
+        stock: 5,
+        image: 'https://res.cloudinary.com/dvyonb6zt/image/upload/v1563820547/Product/w_ef8fhb.jpg',
+        harga: "Rp. 150"
+    },
+    {
+        name: "matras",
+        description: "bagus",
+        stock: 5,
+        image: 'https://res.cloudinary.com/dvyonb6zt/image/upload/v1563820466/Product/d_mvnzd6.jpg',
+        harga: "Rp. 350"
+    },
+    {
+        name: "tenda",
+        description: "bagus",
+        stock: 5,
+        image: 'https://res.cloudinary.com/dvyonb6zt/image/upload/v1563820302/Product/a_xtjh52.jpg',
+        harga: "Rp. 120"
+    },
 ]
 
 export const mountDetail = [

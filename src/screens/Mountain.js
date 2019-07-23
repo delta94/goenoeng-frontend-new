@@ -8,8 +8,12 @@ export default class Mountain extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.searchBox}>
+                    <View style={styles.iconBox3}>
+                    <ImageBackground style={{ height: 40, width: 40 }}
+                            source={require('../Assets/Icons/search.png')} />
+                    </View>
                     <TextInput style={{ color: '#20ab43' }} placeholder={"Search...."}></TextInput>
-                    <View style={styles.iconBox}>
+                    <View style={styles.iconBox2}>
                         <ImageBackground style={{ height: 40, width: 40 }}
                             source={require('../Assets/Icons/search.png')} />
                     </View>
