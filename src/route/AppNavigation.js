@@ -15,11 +15,8 @@ import ProfileStore from '../screens/StoreProfile'
 import EditProfileUser from '../screens/EditProfile'
 import EditProfileStore from '../screens/EditProfileStore'
 import ManageProduct from '../screens/ManageProduct'
-<<<<<<< HEAD
 import Transaction from '../screens/Transaction'
-=======
 import AddProduct from '../screens/AddProduct'
->>>>>>> origin/mermaid
 
 const BottomNavigation = createBottomTabNavigator(
   {
@@ -34,7 +31,6 @@ const BottomNavigation = createBottomTabNavigator(
 
 
 const AppNavigator = createStackNavigator({
-<<<<<<< HEAD
   Home: {
     screen: BottomNavigation
   },
@@ -58,10 +54,9 @@ const AppNavigator = createStackNavigator({
   },
   ManageProduct: {
     screen: ManageProduct
-=======
+  },
   AddProduct: {
     screen: AddProduct
->>>>>>> origin/mermaid
   },
   Mountain: {
     screen: Mountain
