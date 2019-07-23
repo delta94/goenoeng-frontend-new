@@ -99,6 +99,7 @@ module.exports = StyleSheet.create({
         backgroundColor: 'white',
         elevation: 4,
         marginTop: 10,
+        paddingBottom: 80
         // height: heightWindow /2
     },
     shadow: {
@@ -172,6 +173,36 @@ module.exports = StyleSheet.create({
         backgroundColor:'#f0f0f0',
         alignSelf: "center",
         padding:5
+    },
+    headBox: {
+        height: 50,
+        marginTop: 20,
+        borderRadius: 10,
+        borderColor: '#03AC0E',
+        borderWidth: 2,
+        width: widthWindow/1.33,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.23,
+        shadowRadius: 0.62,
+        marginRight: 15,
+        elevation: 1,
+        backgroundColor:'#f0f0f0',
+        // alignSelf: "center",
+        alignItems: 'center',
+        justifyContent: 'center',
+        // padding:5
+    },
+    headTitle: {
+        color: '#20ab43', 
+        textAlign: 'center', 
+        textAlignVertical: 'center',
+        fontWeight: 'bold',
+        fontSize: 25,
+        // padding: 3
     },
     iconBox2:{
         position: 'absolute',
@@ -416,5 +447,15 @@ module.exports = StyleSheet.create({
         marginTop: 20,
         // bottom: 60,
         elevation: 5,
+      },
+      inputBox:{
+        marginTop: 10, 
+        marginLeft: 20
+      },
+      inputTextAdd: {
+        fontSize:15, 
+        borderColor: '#03AC0E', 
+        borderBottomWidth: 2, 
+        marginLeft: 15
       }
 });

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, Text, View, TextInput, ImageBackground } from 'react-native';
+import { Platform, Text, View, TextInput, ImageBackground, TouchableOpacity } from 'react-native';
 import styles from '../Assets/styles'
 import ProductList from '../components/ProductList'
 
@@ -22,7 +22,9 @@ export default class Mountain extends Component {
                     </View>
                 </View>
                 <ProductList />
-
+                <TouchableOpacity style={[styles.button, { alignSelf: 'center', width: 200, backgroundColor: 'rgb(45, 173, 78)', borderColor: '#f0f0f0', borderTopWidth: 5, borderRightWidth: 5, borderLeftWidth: 5 }]} onPress={() => this.goback()}>
+                            <Text style={[styles.loginText, { color: 'white' }]}>Add Product</Text>
+                </TouchableOpacity>
             </View>
         );
     }

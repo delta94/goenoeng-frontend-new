@@ -8,6 +8,7 @@ import ProfileStore from '../screens/StoreProfile'
 import EditProfileUser from '../screens/EditProfile'
 import EditProfileStore from '../screens/EditProfileStore'
 import ManageProduct from '../screens/ManageProduct'
+import AddProduct from '../screens/AddProduct'
 
 const BottomNavigation = createBottomTabNavigator(
   {
@@ -21,11 +22,14 @@ const BottomNavigation = createBottomTabNavigator(
 
 
 const AppNavigator = createStackNavigator({
-  ManageProduct: {
-    screen: ManageProduct
+  AddProduct: {
+    screen: AddProduct
   },
   Mountain: {
     screen: Mountain
+  },
+  ManageProduct: {
+    screen: ManageProduct
   },
   EditProfileStore: {
     screen: EditProfileStore
