@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import {
-    View, Text, StyleSheet, Dimensions, ImageBackground, TextInput, TouchableOpacity
-} from 'react-native';
+import { View, Text, Dimensions, ImageBackground, TouchableOpacity } from 'react-native';
 import style from '../Assets/Style'
 import { connect } from 'react-redux'
 
