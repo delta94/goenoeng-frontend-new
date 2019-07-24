@@ -1,5 +1,3 @@
-
-import React, { Component } from 'react';
 import { createAppContainer, createBottomTabNavigator, createStackNavigator } from 'react-navigation';
 import Login from '../screens/Login';
 import SignUp from '../screens/SignUp/Index';
@@ -17,6 +15,9 @@ import EditProfileStore from '../screens/EditProfileStore'
 import ManageProduct from '../screens/ManageProduct'
 import Transaction from '../screens/Transaction'
 import AddProduct from '../screens/AddProduct'
+import MountainDetail from '../screens/MountainDetail'
+import BookingMountain from '../screens/BookingMountain'
+import Chat from '../screens/Chat'
 
 const BottomNavigation = createBottomTabNavigator(
   {
@@ -28,7 +29,6 @@ const BottomNavigation = createBottomTabNavigator(
 
   }
 );
-
 
 const AppNavigator = createStackNavigator({
   Home: {
@@ -81,8 +81,18 @@ const AppNavigator = createStackNavigator({
   },
   Receipt: {
     screen: Receipt
+  },
+  MountainDetail: {
+    screen: MountainDetail
+  },
+  BookingMountain:{
+    screen: BookingMountain
+  },
+  Chat:{
+    screen: Chat
   }
-}, {
+},
+  {
     headerMode: 'none',
     navigationOptions: {
       headerVisible: false,
