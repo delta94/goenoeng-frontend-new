@@ -5,7 +5,6 @@ import Carousel from 'react-native-snap-carousel'
 import { Container, Header, Left, Body, Right, Button, Icon, Title, Thumbnail, Footer, FooterTab } from 'native-base';
 import axios from 'axios'
 import NumberFormat from 'react-number-format';
-import Users from './Users'
 import firebase from 'firebase'
 
 const { height, width } = Dimensions.get('window')
@@ -77,7 +76,7 @@ export default class MountainDetail extends Component {
                     ]
                 },
             ],
-            userId: Users.id,
+            userId: 0,
             partner: [],
             partnerId: 'user',
             partnerName: 'Gunung'

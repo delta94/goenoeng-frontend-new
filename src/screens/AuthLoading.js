@@ -5,13 +5,15 @@ import {
   StatusBar,
   View,
 } from 'react-native';
-import Users from './Users'
 import firebase from 'firebase'
 
 export default class AuthLoading extends React.Component {
   constructor(props) {
     super(props);
     this._bootstrapAsync();
+    this.state = {
+      User: 1
+    }
   }
 
   componentDidMount() {
@@ -39,9 +41,9 @@ export default class AuthLoading extends React.Component {
   }
 
   _bootstrapAsync = async () => {
-    Users.id = await AsyncStorage.getItem('userId');
+    // User.id = await AsyncStorage.getItem('userId');
     // User.avatar = await AsyncStorage.getItem('userAvatar');
-    this.props.navigation.navigate(Users.id ? 'App' : 'Auth');
+    this.props.navigation.navigate(this.state.User ? 'App' : 'Auth');
   };
 
   render() {

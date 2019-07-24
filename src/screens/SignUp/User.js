@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, TextInput, SafeAreaView, View, TouchableOpacity, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
-import { register } from '../../public';
+import { register } from '../../public/redux/actions/user';
 
 class User extends Component {
 	state = { 

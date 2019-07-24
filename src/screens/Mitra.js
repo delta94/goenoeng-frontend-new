@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet,ScrollView, AsyncStorage, Text,Image, TextInput, SafeAreaView, View, TouchableOpacity, StatusBar } from 'react-native';
-import Users from './Users'
+
 import firebase from 'firebase'
 import { withNavigation } from 'react-navigation';
 import { Picker, Form, Container, Header, Left, Body, Right, Button, Icon, Title, Thumbnail, Footer, FooterTab } from 'native-base';
@@ -51,7 +51,7 @@ class Mitra extends Component {
 			.createUserWithEmailAndPassword(this.state.email, this.state.password)
 			.then(async (response) => {
 				await AsyncStorage.setItem('userId', response.user.uid)
-				Users.id = await AsyncStorage.getItem('userId')
+				//Users.id = await AsyncStorage.getItem('userId')
 				await AsyncStorage.setItem('userPassword', this.state.password)
 				let userf = firebase.auth().currentUser;
 				userf.updateProfile({ displayName: this.state.name })
@@ -63,10 +63,10 @@ class Mitra extends Component {
 					status: 'offline'
 				})
 
-				Users.email = this.state.email
-				Users.name = this.state.name
-				Users.role = 'partner'
-				Users.status = 'offline'
+				// Users.email = this.state.email
+				// Users.name = this.state.name
+				// Users.role = 'partner'
+				// Users.status = 'offline'
 
 				alert("User " + this.state.name + " berhasil dibuat. otomatis login.")
 				this.props.navigation.navigate('App')

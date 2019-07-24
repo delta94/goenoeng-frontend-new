@@ -1,35 +1,20 @@
 import React, { Component } from 'react';
-import { Text, AsyncStorage,View, StyleSheet, TextInput, SafeAreaView, StatusBar, TouchableOpacity } from 'react-native';
-import { Picker, Form, Container, Header, Left, Body, Right, Button, Icon, Title, Thumbnail, Footer, FooterTab } from 'native-base';
-import Users from './Users'
-import firebase from 'firebase'
+import { Text, View, StyleSheet, TextInput, SafeAreaView, StatusBar, TouchableOpacity } from 'react-native';
+import { Picker, Form, Icon } from 'native-base';
+import { connect } from 'react-redux';
+import { login } from '../public/redux/actions/user';
 
-export default class Login extends Component {
+
+class Login extends Component {
 	state = { 
 		email       : '',
 		password    : '',
-		privilege:'Customer',
+		level:'user',
 	}
 
 	handleLogin = async() => {
-		await firebase.auth()
-      .signInWithEmailAndPassword(this.state.email, this.state.password)
-      .then((async (response) => {
-        let userf = firebase.auth().currentUser;
-        await AsyncStorage.setItem('userId', userf.uid)
-        await AsyncStorage.setItem('userPassword', this.state.password)
-        Users.id = await AsyncStorage.getItem('userId');
-        await firebase.database().ref('users/' + userf.uid)
-          .update({
-            status: 'online'
-          })
-
-        alert('login berhasil, selamat datang di menung.');
-        this.props.navigation.navigate('App');
-      }),
-        function (error) {
-          alert('login gagal. Error: ' + error.message)
-        })
+		const { email,password,level } = this.state;
+		this.props.dispatch( login( email,password,level )).then(()=> this.props.navigation.goBack())
 	}
 
 	onValueChange(value) {
@@ -58,7 +43,6 @@ export default class Login extends Component {
 						placeholder="Pilih Sebagai"
 						placeholderStyle={{ color: "white" }}
 						placeholderIconColor="white"
-						// style={{ width: undefined }}
 						selectedValue={this.state.privilege}
 						onValueChange={this.onValueChange.bind(this)}
 					>
@@ -93,11 +77,18 @@ export default class Login extends Component {
 		)
 	}
 }
+
+const mapStateToProps= state => {
+	return {
+		user: state.user,
+	}
+  }
+export default connect(mapStateToProps)(Login);
+
 const styles = StyleSheet.create({
 	container: {
 		flex          : 1,
 		justifyContent: 'center',
-		// alignItems    : 'center',
 	},
 	textInput: {
 		height         : 50,
