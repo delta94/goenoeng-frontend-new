@@ -1,16 +1,21 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, TextInput, SafeAreaView, View, TouchableOpacity, StatusBar } from 'react-native';
+import { connect } from 'react-redux';
+import { register } from '../../public';
 
-export default class User extends Component {
+class User extends Component {
 	state = { 
 		email       : '',
 		name		: '',
 		address		: '',
 		password    : '',
+		phone: '',
+		level: 'user'
 	}
 
 	handleSignUp = () => {
-	    
+	    const { email,password,name,address,phone,level } = this.state;
+		this.props.dispatch( register( email,password,name,address,phone,level )).then(()=> this.props.navigation.navigate('Home'))
   	}
 
 	render() {
@@ -68,6 +73,12 @@ export default class User extends Component {
 		)
 	}
 }
+const mapStateToProps= state => {
+	return {
+		user: state.user,
+	}
+  }
+export default connect(mapStateToProps)(User)
 
 const styles = StyleSheet.create({
 	container: {

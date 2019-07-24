@@ -3,7 +3,7 @@ import { Text, View, Image, FlatList, Picker, TouchableOpacity, Alert } from 're
 import Icon from 'react-native-vector-icons/FontAwesome';
 import NumericInput from 'react-native-numeric-input';
 import Axios from 'axios';
-import { Header } from 'react-navigation';
+import { connect } from 'react-redux';
 
 class Store extends Component {
     constructor(props) {
@@ -81,18 +81,23 @@ class Store extends Component {
             items: this.state.product.filter(item => item.rent !== 0)
         })
         console.warn(this.state.items, this.state.duration)
-        if (this.state.items.length > 0 && this.state.duration > 0) {
-            let rent = { product: this.state.items, day: this.state.day }
-            this.props.navigation.navigate('Transaksi', rent)
+        if ( ! this.props.user.isLogin ) {
+            this.props.navigation.navigate('Login')
         } else {
-            let message
-            if (this.state.items.length === 0) {
-                message = 'Tidak ada barang yang dipilih untuk di sewa\n silahkan pilih barang'
+            if (this.state.items.length > 0 && this.state.duration > 0) {
+                let rent = { product: this.state.items, day: this.state.day }
+                this.props.navigation.navigate('Transaksi', rent)
             } else {
-                message = 'Mohon isi durasi untuk di sewa'
+                let message
+                if (this.state.items.length === 0) {
+                    message = 'Tidak ada barang yang dipilih untuk di sewa\n silahkan pilih barang'
+                } else {
+                    message = 'Mohon isi durasi untuk di sewa'
+                }
+                Alert.alert('Peringatan', message)
             }
-            Alert.alert('Peringatan', message)
         }
+        
     }
     componentDidMount(){
         Axios.get('https://menung.herokuapp.com/partners',{ headers: { 'x-app-name': 'menung982998372771' }})
@@ -194,4 +199,10 @@ class Store extends Component {
         )
     }
 }
-export default Store;
+
+const mapStateToProps= state => {
+	return {
+		user: state.user,
+	}
+  }
+export default connect(mapStateToProps)(Store);

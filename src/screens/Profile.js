@@ -3,6 +3,7 @@ import {
     View, Text, StyleSheet, Dimensions, ImageBackground, TextInput, TouchableOpacity
 } from 'react-native';
 import style from '../Assets/Style'
+import { connect } from 'react-redux'
 
 const widthWindow = Dimensions.get('window').width
 class StoreProfile extends Component {
@@ -15,6 +16,9 @@ class StoreProfile extends Component {
             image: 'https://res.cloudinary.com/dvyonb6zt/image/upload/v1563542754/Product/ggirl_omijq3.png',
             error: ''
         };
+        if ( !props.user.isLogin ) {
+            props.navigation.navigate('Login')
+        }
     }
 
     goback = () => {
@@ -71,5 +75,10 @@ class StoreProfile extends Component {
         );
     }
 }
+const mapStateToProps= state => {
+	return {
+		user: state.user,
+	}
+  }
 
-export default StoreProfile;
+export default connect(mapStateToProps)(StoreProfile);

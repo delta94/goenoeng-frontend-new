@@ -18,6 +18,9 @@ import AddProduct from '../screens/AddProduct'
 import MountainDetail from '../screens/MountainDetail'
 import BookingMountain from '../screens/BookingMountain'
 import Chat from '../screens/Chat'
+import AuthLoading from '../screens/AuthLoading';
+import User from '../screens/User';
+import Mitra from '../screens/Mitra';
 
 const BottomNavigation = createBottomTabNavigator(
   {
@@ -95,8 +98,38 @@ const AppNavigator = createStackNavigator({
   {
     headerMode: 'none',
     navigationOptions: {
+      header: null,
       headerVisible: false,
     }
   });
 
-export default createAppContainer(AppNavigator);
+const AuthStack = createStackNavigator({
+  Login: {
+    screen: Login
+  },
+});
+const RegisterStack = createStackNavigator({
+  SignUp: {
+    screen: SignUp
+  },
+  User:{
+    screen: User
+  },
+  Mitra:{
+    screen: Mitra
+  },
+});
+
+export default createAppContainer(createSwitchNavigator(
+  {
+    // SplashScreen: SplashScreen,
+    AuthLoading: AuthLoading,
+    App: AppNavigator,
+    Register: RegisterStack,
+    Auth: AuthStack,
+  },
+  {
+    initialRouteName: 'AuthLoading',
+  }
+));
+// export default createAppContainer(AppNavigator);
