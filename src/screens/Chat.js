@@ -59,7 +59,6 @@ export default class Chat extends React.Component {
     //         )
     //     }
     // }
-
     // componentDidMount = async () => {
     //     this.setState({
     //         myUid: User.id,
