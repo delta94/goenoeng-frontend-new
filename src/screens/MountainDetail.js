@@ -19,63 +19,8 @@ export default class MountainDetail extends Component {
                 'https://i.pinimg.com/564x/5e/3c/6b/5e3c6b968ac1ba5463f96fc370270b8a.jpg',
                 'https://i.pinimg.com/564x/b6/3f/59/b63f590d457d01e7659b509e85acede9.jpg'
             ],
-            mountainData: [],
-            shops: [
-                {
-                    name: 'Toko 1',
-                    address: 'Jl Terus',
-                    products: [
-                        {
-                            photo: 'https://i.pinimg.com/564x/70/a2/fb/70a2fbe04a907ab3c526748e7be6238a.jpg',
-                            product_name: 'Tas Camping'
-                        },
-                        {
-                            photo: 'https://i.pinimg.com/564x/1d/7f/9d/1d7f9d196324d1c15d5a59a09f548326.jpg',
-                            product_name: 'Sepatu Camping'
-                        },
-                        {
-                            photo: 'https://i.pinimg.com/564x/f6/b0/1e/f6b01ec026a4c1bb3d63a035dd325750.jpg',
-                            product_name: 'Tenda Camping'
-                        }
-                    ]
-                },
-                {
-                    name: 'Toko 2',
-                    address: 'Jl Jalan',
-                    products: [
-                        {
-                            photo: 'https://i.pinimg.com/564x/70/a2/fb/70a2fbe04a907ab3c526748e7be6238a.jpg',
-                            product_name: 'Tas Camping'
-                        },
-                        {
-                            photo: 'https://i.pinimg.com/564x/1d/7f/9d/1d7f9d196324d1c15d5a59a09f548326.jpg',
-                            product_name: 'Sepatu Camping'
-                        },
-                        {
-                            photo: 'https://i.pinimg.com/564x/f6/b0/1e/f6b01ec026a4c1bb3d63a035dd325750.jpg',
-                            product_name: 'Tenda Camping'
-                        }
-                    ]
-                },
-                {
-                    name: 'Toko 3',
-                    address: 'Jl Dulu',
-                    products: [
-                        {
-                            photo: 'https://i.pinimg.com/564x/70/a2/fb/70a2fbe04a907ab3c526748e7be6238a.jpg',
-                            product_name: 'Tas Camping'
-                        },
-                        {
-                            photo: 'https://i.pinimg.com/564x/1d/7f/9d/1d7f9d196324d1c15d5a59a09f548326.jpg',
-                            product_name: 'Sepatu Camping'
-                        },
-                        {
-                            photo: 'https://i.pinimg.com/564x/f6/b0/1e/f6b01ec026a4c1bb3d63a035dd325750.jpg',
-                            product_name: 'Tenda Camping'
-                        }
-                    ]
-                },
-            ],
+            mountainData: this.props.navigation.state.params,
+            shops: [],
             userId: 0,
             partner: [],
             partnerId: 'user',
@@ -99,11 +44,11 @@ export default class MountainDetail extends Component {
 
     prevCarouselImage = () => {
         this.state.activeIndex > 0 ?
-            this.carousel._snapToItem(this.state.activeIndex - 1) : this.carousel._snapToItem(this.state.MountainPhotos.length - 1)
+            this.carousel._snapToItem(this.state.activeIndex - 1) : this.carousel._snapToItem(this.state.mountainData.images.length - 1)
     }
 
     nextCarouselImage = () => {
-        this.state.activeIndex < this.state.MountainPhotos.length - 1 ?
+        this.state.activeIndex < this.state.mountainData.images.length - 1 ?
             this.carousel._snapToItem(this.state.activeIndex + 1) : this.carousel._snapToItem(0)
     }
 
@@ -112,46 +57,50 @@ export default class MountainDetail extends Component {
         // axios.defaults.headers.get['Content-Type'] = 'application/x-www-form-urlencoded';
         // const AuthStr = 'x-app-name '.concat("menung982998372771");
 
-        axios.get(`https://menung.herokuapp.com/mountains/5d3642762084e22404f9f2d2`, {
+        await axios.get(`https://menung.herokuapp.com/partners/mountain/${this.state.mountainData._id}`, {
             headers: {
                 'x-app-name': 'menung982998372771'
             }
         })
             .then((response) => { //use arrow to get setState on this call without any extra binding or placeholder variable
-                // console.warn(response.data.data);
+                console.warn('shop1', response.data.data);
                 this.setState({
-                    mountainData: response.data.data,
+                    shops: response.data.data,
                 })
             })
             // .then( async ()=>{
             .catch((error) => {
                 console.warn(error)
             })
-            await firebase.database().ref('users/').on('child_added', (value) => {
-                let person = value.val()
-                // console.warn('masuk', value.val());
-                person.userId = value.key
-                person.manage = value.val().manage
-                // console.warn('masuk', value.val().manage);
-                if (person.userId === Users.id) {
-                    Users.name = person.name
-                    Users.email = person.email
-                    Users.status = person.status
-                }
-                else {
-                    // console.warn('id', this.state.mountainData._id)
-                    // console.warn('person',person.manage)
-                    if (person.manage === this.state.mountainData._id) {
-                        // console.warn('masuk', person.name);
-                        this.setState((prevState) => {
-                            return {
-                                partner: [...prevState.partner, person]
-                            }
-                        })
-                    }
-                }
-            })
+            
             // console.warn('nama', this.state.partner);
+    }
+
+    realtimeListener = async () => {
+        await firebase.database().ref('users/').on('child_added', (value) => {
+            let person = value.val()
+            // console.warn('masuk', value.val());
+            person.userId = value.key
+            person.manage = value.val().manage
+            // console.warn('masuk', value.val().manage);
+            if (person.userId === Users.id) {
+                Users.name = person.name
+                Users.email = person.email
+                Users.status = person.status
+            }
+            else {
+                // console.warn('id', this.state.mountainData._id)
+                // console.warn('person',person.manage)
+                if (person.manage === this.state.mountainData._id) {
+                    // console.warn('masuk', person.name);
+                    this.setState((prevState) => {
+                        return {
+                            partner: [...prevState.partner, person]
+                        }
+                    })
+                }
+            }
+        })
     }
 
     // fetchMountain = async () => {
@@ -180,7 +129,6 @@ export default class MountainDetail extends Component {
     }
 
     render() {
-        console.warn('partner', this.state.partner[0])
         return (
             <View style={{ flex: 1 }}>
                 <Text style={{ textAlign: 'center', padding: 10, fontWeight: 'bold', fontSize: 20, color: 'white', backgroundColor: '#34c759' }}>
@@ -199,7 +147,7 @@ export default class MountainDetail extends Component {
                             }
                         />
                         <View style={{ flexDirection: 'row', alignSelf: 'center', top: 3, bottom: 20, left: 10 }}>
-                            {this.state.MountainPhotos.map((item, i) =>
+                            {this.state.mountainData.images.map((item, i) =>
                                 <View key={i} style={{ width: 8, height: 8, borderRadius: 25, backgroundColor: this.state.activeIndex == i ? '#34c759' : '#e8eaed', margin: 3 }} />
                             )}
                         </View>
@@ -304,17 +252,16 @@ export default class MountainDetail extends Component {
                             borderBottomWidth: 2,
                         }}
                     />
-
+                    {console.warn('mountain', this.state.mountainData)}
                     <View style={{ backgroundColor: 'white', width: '100%', flex: 1, padding: 20, alignContent: 'space-around' }}>
                         <Text style={{ fontSize: 16, color: '#34c759', fontWeight: 'bold' }}>Saran Toko</Text>
                         {this.state.shops.map((item, i) =>
-                            item.name.length > 0 &&
                             (
                                 <View key={i} style={{ flex: 1, marginTop: 10, borderColor: '#34c759', borderWidth: 2, backgroundColor: 'white', width: '100%', height: '100%' }}>
                                     <TouchableOpacity
                                         // onPress={() => this.props.navigation.navigate('ProductCategory', { categoryId: item._id })} 
                                         style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 10 }}>
-                                        <View style={{ flex: 1 }}><Text style={{ fontSize: 20 }}>{item.name}</Text></View>
+                                        <View style={{ flex: 1 }}><Text style={{ fontSize: 20 }}>{item.partner.name}</Text></View>
                                         <View style={{ right: 0 }}><Text style={{ color: 'grey' }}>{item.address}</Text></View>
                                     </TouchableOpacity>
                                     <ScrollView style={{ padding: 10, marginBottom: 20 }} horizontal={true}>
@@ -322,9 +269,9 @@ export default class MountainDetail extends Component {
                                             <TouchableOpacity key={i} style={{ flex: 1, width: 150, height: 150, backgroundColor: 'white', borderColor: '#34c759', borderWidth: 1, alignItems: 'center', justifyContent: 'center', padding: 10 }}
                                             // onPress={() => this.props.navigation.navigate('DetailProduct', { productId: item._id })}
                                             >
-                                                <Image style={{ width: 100, height: 100 }} source={{ uri: item.photo }} />
+                                                <Image style={{ width: 100, height: 100 }} source={{ uri: item.images_product[0] }} />
                                                 <View style={{ width: '100%' }}>
-                                                    <Text style={{ color: 'grey' }} numberOfLines={2}>{item.product_name}</Text>
+                                                    <Text style={{ color: 'grey' }} numberOfLines={2}>{item.name_product}</Text>
                                                     {/* <Text style={{ color: '#dce1e6', fontSize: 15, marginTop: 15 }}>Rp {Math.ceil(item.product_price * 100 / (100 - 30))}</Text>
                                                     <Text style={{ fontSize: 15, marginTop: 5 }}>Rp {item.product_price}</Text>
                                                     <View style={{ backgroundColor: 'orange', padding: 3, width: '40%', marginTop: 10, alignItems: 'center', justifyContent: 'center' }}>
