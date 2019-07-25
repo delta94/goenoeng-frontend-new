@@ -158,7 +158,7 @@ class MountainDetail extends Component {
                                     onPress={() => {
                                         let { _id, name, images } = this.state.mountainData
                                         let store = { idStore: _id, nameStore: name, photo: images }
-                                        let chat = { sender: this.props.user.user, receiver: store }
+                                        let chat = { sender: this.props.user, receiver: store }
                                         this.props.navigation.navigate('Chat', chat)
                                     }
                                     }>

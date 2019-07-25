@@ -98,8 +98,7 @@ class Store extends Component {
                             <TouchableOpacity style={{ marginLeft: '5%' }} onPress={() => {
                                 let { idStore, nameStore, photo } = this.state
                                 let store= { idStore: idStore, nameStore: nameStore, photo: photo }
-                                
-                                let chat = { sender: this.props.user.user, receiver: store }
+                                let chat = { sender: this.props.user, receiver: store }
                                 this.props.navigation.navigate('Chat', chat)
                                 }}>
                                 <Icon name='wechat' size={20} style={{ color: '#34c759' }} />
