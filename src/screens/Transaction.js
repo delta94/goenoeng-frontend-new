@@ -3,12 +3,10 @@ import {
     View,
     Text,
     StyleSheet,
-    SafeAreaView,
     Image,
     FlatList,
     TouchableOpacity,
 } from "react-native";
-import Moment from 'react-moment';
 import moment from 'moment'
 
 let total = 0
