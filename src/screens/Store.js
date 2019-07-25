@@ -59,7 +59,7 @@ class Store extends Component {
         } else {
             if (this.state.items.length > 0 && this.state.duration > 0) {
                 let rent = { product: this.state.items, day: this.state.duration }
-                this.props.navigation.navigate('Transaksi', rent)
+                this.props.navigation.navigate('Transaction', rent)
             } else {
                 let message
                 if (this.state.items.length === 0) {
