@@ -21,11 +21,12 @@ import Chat from '../screens/Chat'
 import AuthLoading from '../screens/AuthLoading';
 import User from '../screens/User';
 import Mitra from '../screens/Mitra';
+import History from '../screens/History'
 
 const BottomNavigation = createBottomTabNavigator(
   {
     Home: Home,
-    Transaksi: Transaction,
+    History: History,
     Profile: ProfileUser,
   },
   {
