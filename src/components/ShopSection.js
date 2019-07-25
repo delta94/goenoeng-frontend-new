@@ -1,23 +1,46 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, View, Text, StyleSheet, Dimensions, ImageBackground, FlatList, SectionList } from 'react-native'
+import { TouchableOpacity, View, Text, StyleSheet, Dimensions, ImageBackground, FlatList, SectionList, ActivityIndicator } from 'react-native'
 import { shopList2 } from '../Assets/dummy'
 import { connect } from 'react-redux'
 import styles from '../Assets/Style'
+import Axios from 'axios';
  
 class ShopSectionlist extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            isLoading: true,
+            shop: []
+        }
     }
+
+    componentDidMount() {
+        this.fetchData()
+    }
+
+    fetchData = async () => {
+        this.setState({isLoading:true})
+        await Axios.get('https://menung.herokuapp.com/partners', {
+            headers: {
+                'x-app-name':'menung982998372771'
+            }
+        }).then(response => {
+            console.log(response)
+            this.setState({shop: response.data.data})
+        })
+        this.setState({isLoading:false})
+    }
+
     renderStore = ({ item, index }) => {
-        return (
+        return ( 
             <View style={styles.shadow}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 20, marginBottom: 10 }}>
                     <View style={{ flexDirection: 'column', paddingRight: 20 }}>
-                        <Text style={{ color: 'black', fontSize: 18 }}>{item.name}</Text>
-                        <Text>{item.City}</Text>
+                        <Text style={{ color: 'black', fontSize: 18 }}>{item.partner.name}</Text>
+                        <Text>{item.partner.address}</Text>
                         <FlatList
                             // style={{flex: 3, flexDirection: "row", justifyContent: 'space-around', width:'100%'}}
-                            data={item.product}
+                            data={item.products}
                             renderItem={this.renderItem}
                             numColumns={3}
                         />
@@ -37,11 +60,11 @@ class ShopSectionlist extends Component {
         return (
             <View style={styles.itemFLat}>
                 <View style={styles.itemFlat2}>
-                    <ImageBackground style={{ height: 60, width: 60 }} source={{ uri: item.image }}></ImageBackground>
+                    <ImageBackground style={{ height: 60, width: 60 }} source={{ uri: item.images_product[0] }}></ImageBackground>
                     <Text style={{ color: 'black', marginBottom: 3 }}>
-                        {item.name}
+                        {item.name_product}
                     </Text>
-                    <Text style={{ color: '#FF5722', fontWeight: '600', marginBottom: 3 }}>{"Rp" + item.harga}</Text>
+                    <Text style={{ color: '#FF5722', fontWeight: '600', marginBottom: 3 }}>{"Rp" + item.price}</Text>
                 </View>
             </View>
         )
@@ -51,10 +74,11 @@ class ShopSectionlist extends Component {
         return (
             <View style={styles.flatCard}>
                 {/* <CheckBox></CheckBox> */}
-                <FlatList
-                    data={shopList2}
+                {this.state.isLoading ? <ActivityIndicator size="large" color="blue" /> : <FlatList
+                    data={this.state.shop}
                     renderItem={this.renderStore}
-                />
+                /> }
+                
             </View>
         )
     }
