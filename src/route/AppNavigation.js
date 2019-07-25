@@ -1,6 +1,6 @@
-import { createAppContainer, createBottomTabNavigator, createStackNavigator } from 'react-navigation';
+import { createAppContainer, createBottomTabNavigator, createSwitchNavigator, createStackNavigator } from 'react-navigation';
 import Login from '../screens/Login';
-import SignUp from '../screens/SignUp/Index';
+import SignUp from '../screens/Index';
 import Gateway from '../screens/Payment/Gateway';
 import Receipt from '../screens/Payment/Receipt';
 import Store from '../screens/Store';

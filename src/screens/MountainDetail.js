@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, Dimensions, TextInput, SafeAreaView, Image, ScrollView, AsyncStorage } from 'react-native'
+import { View, Text, TouchableOpacity, Dimensions, TextInput, SafeAreaView, Image, Alert, ScrollView, AsyncStorage } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Carousel from 'react-native-snap-carousel'
 import { Container, Header, Left, Body, Right, Button, Icon, Title, Thumbnail, Footer, FooterTab } from 'native-base';
@@ -199,7 +199,7 @@ export default class MountainDetail extends Component {
                             }
                         />
                         <View style={{ flexDirection: 'row', alignSelf: 'center', top: 3, bottom: 20, left: 10 }}>
-                            {this.state.MountainPhotos.map((item, i) =>
+                            {this.state.mountainData.images.map((item, i) =>
                                 <View key={i} style={{ width: 8, height: 8, borderRadius: 25, backgroundColor: this.state.activeIndex == i ? '#34c759' : '#e8eaed', margin: 3 }} />
                             )}
                         </View>

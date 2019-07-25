@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import style from '../Assets/Style'
 import { ScrollView } from 'react-native-gesture-handler';
+import { connect } from 'react-redux'
 
 const widthWindow = Dimensions.get('window').width
 class EditProfile extends Component {
@@ -112,4 +113,11 @@ class EditProfile extends Component {
     }
 }
 
-export default EditProfile;
+const mapStateToProps= state => {
+	return {
+		user: state.user.user,
+	}
+  }
+
+export default connect(mapStateToProps)(EditProfile);
+
