@@ -81,7 +81,7 @@ class Store extends Component {
             items: this.state.product.filter(item => item.rent !== 0)
         })
         console.warn(this.state.items, this.state.duration)
-        if ( ! this.props.user.isLogin ) {
+        if (!this.props.user.isLogin) {
             this.props.navigation.navigate('Login')
         } else {
             if (this.state.items.length > 0 && this.state.duration > 0) {
@@ -97,13 +97,13 @@ class Store extends Component {
                 Alert.alert('Peringatan', message)
             }
         }
-        
+
     }
-    componentDidMount(){
-        Axios.get('https://menung.herokuapp.com/partners',{ headers: { 'x-app-name': 'menung982998372771' }})
-        .then( data => {
-            console.warn(data.data.data)
-        })
+    componentDidMount() {
+        Axios.get('https://menung.herokuapp.com/partners', { headers: { 'x-app-name': 'menung982998372771' } })
+            .then(data => {
+                console.warn(data.data.data)
+            })
     }
     render() {
         return (
@@ -112,10 +112,10 @@ class Store extends Component {
                     <Image source={{ uri: this.state.photo }} style={{ height: 100, width: 100, margin: 10, borderRadius: 10 }} />
                     <View style={{ padding: 10 }}>
                         <View style={{ alignSelf: 'flex-end', flexDirection: 'row' }}>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Maps',{ target: this.props.store })}>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Maps', { target: this.props.store })}>
                                 <Icon name='map-o' size={20} style={{ color: '#34c759' }} />
                             </TouchableOpacity>
-                            <TouchableOpacity style={{marginLeft: '5%'}} onPress={() => this.props.navigation.navigate('Chat')}>
+                            <TouchableOpacity style={{ marginLeft: '5%' }} onPress={() => this.props.navigation.navigate('Chat')}>
                                 <Icon name='wechat' size={20} style={{ color: '#34c759' }} />
                             </TouchableOpacity>
                         </View>
@@ -200,9 +200,9 @@ class Store extends Component {
     }
 }
 
-const mapStateToProps= state => {
-	return {
-		user: state.user,
-	}
-  }
+const mapStateToProps = state => {
+    return {
+        user: state.user,
+    }
+}
 export default connect(mapStateToProps)(Store);

@@ -1,4 +1,4 @@
-import { createAppContainer, createBottomTabNavigator, createStackNavigator } from 'react-navigation';
+import { createAppContainer, createBottomTabNavigator, createStackNavigator, createSwitchNavigator } from 'react-navigation';
 import Login from '../screens/Login';
 import SignUp from '../screens/SignUp/Index';
 import Gateway from '../screens/Payment/Gateway';
@@ -21,11 +21,12 @@ import Chat from '../screens/Chat'
 import AuthLoading from '../screens/AuthLoading';
 import User from '../screens/User';
 import Mitra from '../screens/Mitra';
+import History from '../screens/History'
 
 const BottomNavigation = createBottomTabNavigator(
   {
     Home: Home,
-    Transaksi: Transaction,
+    History: History,
     Profile: ProfileUser,
   },
   {
