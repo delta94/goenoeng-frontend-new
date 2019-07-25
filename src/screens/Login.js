@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, TextInput, SafeAreaView, StatusBar, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, TextInput, SafeAreaView, StatusBar, Alert, TouchableOpacity,BackHandler   } from 'react-native';
 import { Picker, Form, Icon } from 'native-base';
 import { connect } from 'react-redux';
 import { login } from '../public/redux/actions/user';
@@ -14,12 +14,44 @@ class Login extends Component {
 
 	handleLogin = async() => {
 		const { email,password,level } = this.state;
-		this.props.dispatch( login( email,password,level )).then(()=> this.props.navigation.goBack())
+		this.props.dispatch( login( email,password,level )).then(()=> {
+			this.props.navigation.goBack()
+			this.props.navigation.navigate('App')
+		}, function (error) {
+			alert("Gagal Masuk. Yang Bener Kalo Masukin Password sama Email!");
+		}
+		)
 	}
+
+	componentWillMount() {
+		BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
+	  }
+	
+	  componentWillUnmount() {
+		BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
+	  }
+	
+	  onBackPress = () => {
+	 
+		//Code to display alert message when use click on android device back button.
+		// Alert.alert(
+		//   ' Exit From App ',
+		//   ' Do you want to exit From App ?',
+		//   [
+		// 	{ text: 'Yes', onPress: () => this.props.navigation.navigate('Home') },
+		// 	{ text: 'No', onPress: () => console.log('NO Pressed') }
+		//   ],
+		//   { cancelable: false },
+		// );
+	 
+		// // Return true to enable back button over ride.
+		// return true;
+		return this.props.navigation.navigate('Home')
+	  }
 
 	onValueChange(value) {
 		this.setState({
-		  privilege: value
+		  level: value
 		});
 	  }
 	render() {
