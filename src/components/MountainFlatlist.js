@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { TouchableOpacity, View, Text, StyleSheet, Dimensions, ImageBackground, FlatList, SectionList } from 'react-native'
 import { mountDetail } from '../Assets/dummy'
 import { connect } from 'react-redux'
-import styles from '../Assets/styles'
+import styles from '../Assets/Style'
 
 class Mountainlist extends Component {
     constructor(props) {
@@ -14,9 +14,12 @@ class Mountainlist extends Component {
             <View style={styles.itemMount}>
                 <View style={styles.itemMount}>
                     <View style={styles.listStyle}>
-                    <Text style={styles.statusText}>
+                        <TouchableOpacity onPress={()=> this.props.navigation.navigate('MountainDetail')}>
+                        <Text style={styles.statusText}>
                         {item.status}
                     </Text>
+                        </TouchableOpacity>
+                    
                     <Text style={styles.mountTitle}>{"Gunung "+item.name}</Text>
                     <Text style={styles.mountDetail}>{"Tinggi : "+item.tinggi}</Text>
                     <Text style={styles.mountDetail}>{"Level : "+item.level}</Text>

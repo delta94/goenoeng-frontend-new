@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import { TouchableOpacity, View, Text, StyleSheet, Dimensions, ImageBackground, FlatList, SectionList } from 'react-native'
 import { shopList2 } from '../Assets/dummy'
 import { connect } from 'react-redux'
-import styles from '../Assets/styles'
-
+import styles from '../Assets/Style'
+ 
 class ShopSectionlist extends Component {
     constructor(props) {
         super(props);
     }
     renderStore = ({ item, index }) => {
-        // console.log(item)
         return (
             <View style={styles.shadow}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 20, marginBottom: 10 }}>
@@ -23,9 +22,10 @@ class ShopSectionlist extends Component {
                             numColumns={3}
                         />
                         {/* <View style={{flexDirection:'row', justifyContent}}> */}
-                        <View style={styles.goShop}>
+                        <TouchableOpacity style={styles.goShop}
+                        onPress={ () => this.props.navigation.navigate('Store') }>
                             <Text style={{ color: 'white' }}>{"Go to Shop"}</Text>
-                        </View>
+                        </TouchableOpacity>
                         {/* </View> */}
                     </View>
                 </View>

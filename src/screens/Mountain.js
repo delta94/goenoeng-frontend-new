@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Platform, Text, View, TextInput, ImageBackground } from 'react-native';
-import styles from '../Assets/styles'
+import { Platform, Text, View, TextInput, ImageBackground, TouchableOpacity } from 'react-native';
+import styles from '../Assets/Style'
 import MountainList from '../components/MountainFlatlist'
 
 export default class Mountain extends Component {
@@ -8,10 +8,11 @@ export default class Mountain extends Component {
         return (
             <View style={styles.container}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between'}}>
-                    <View style={styles.iconBox3}>
+                    <TouchableOpacity style={styles.iconBox3}
+                    onPress={ () => this.props.navigation.goBack()}>
                         <ImageBackground style={{ height: 40, width: 40 }}
                             source={require('../Assets/Icons/back.png')} />
-                    </View>
+                    </TouchableOpacity>
                     <View style={styles.searchBox}>
 
                         <TextInput style={{ color: '#20ab43' }} placeholder={"Search...."}></TextInput>
@@ -21,7 +22,7 @@ export default class Mountain extends Component {
                         </View>
                     </View>
                 </View>
-                <MountainList/>
+                <MountainList navigation={this.props.navigation} />
                 
             </View>
         );
