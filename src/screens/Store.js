@@ -51,15 +51,16 @@ class Store extends Component {
     }
     rent = async () => {
         await this.setState({
-            items: this.state.product.filter(item => item.rent !== 0)
+            items: this.state.product.filter(item => item.rent > 0)
         })
         console.warn(this.state.items, this.state.duration)
         if (!this.props.user.isLogin) {
             this.props.navigation.navigate('Login')
         } else {
             if (this.state.items.length > 0 && this.state.duration > 0) {
+                console.warn(this.state.items.length)
                 let rent = { product: this.state.items, day: this.state.duration }
-                this.props.navigation.navigate('Transaksi', rent)
+                this.props.navigation.navigate('Transaction', rent)
             } else {
                 let message
                 if (this.state.items.length === 0) {
