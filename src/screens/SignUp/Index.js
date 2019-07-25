@@ -45,9 +45,3 @@ export default class SignUp extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  scene: {
-    flex: 1,
-  },
-});
