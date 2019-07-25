@@ -1,59 +1,33 @@
 import React, { Component } from 'react';
-import { Text, View, Image, FlatList, Picker, TouchableOpacity, Alert } from 'react-native';
+import { Text, View, Image, FlatList, Picker, TouchableOpacity, Alert,ImageBackground } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import NumericInput from 'react-native-numeric-input';
 import Axios from 'axios';
 import { connect } from 'react-redux';
+import styles from '../Assets/Styles';
+import Styles from '../Assets/Style'
 
 class Store extends Component {
     constructor(props) {
         super(props)
         this.state = {
             modalVisible: false,
-            nameStore: 'Merbabu Adv',
-            address: 'jl.bla bla ba',
-            desc: 'menyewakan alat2 outdoor',
-            photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT23pWgykESLk4y9Gtx7nzj4CXZc2605bCHiqAvTHA8gE4RznDM',
+            nameStore: '',
+            address: '',
+            desc: '',
+            photo: '',
             product: [
                 {
-                    id: 0,
-                    name: 'tenda Uk 2-4 orang',
-                    rentPrice: 5000,
-                    stock: 10,
+                    _id: 3,
+                    name_product: '',
+                    price: 0,
+                    stock: 0,
                     rent: 0,
-                    desc: 'ndvnpdvo jdvjnvnsinva',
-                    photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT23pWgykESLk4y9Gtx7nzj4CXZc2605bCHiqAvTHA8gE4RznDM',
-                },
-                {
-                    id: 1,
-                    name: 'tenda Uk 2-4 orang',
-                    rentPrice: 5000,
-                    stock: 7,
-                    rent: 0,
-                    desc: 'ndvnpdvo jdvjnvnsinva',
-                    photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT23pWgykESLk4y9Gtx7nzj4CXZc2605bCHiqAvTHA8gE4RznDM',
-                },
-                {
-                    id: 2,
-                    name: 'tenda Uk 2-4 orang',
-                    rentPrice: 5000,
-                    stock: 10,
-                    rent: 0,
-                    desc: 'ndvnpdvo jdvjnvnsinva',
-                    photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT23pWgykESLk4y9Gtx7nzj4CXZc2605bCHiqAvTHA8gE4RznDM',
-                },
-                {
-                    id: 3,
-                    name: 'tenda Uk 2-4 orang',
-                    rentPrice: 5000,
-                    stock: 10,
-                    rent: 0,
-                    desc: 'ndvnpdvo jdvjnvnsinva',
-                    photo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT23pWgykESLk4y9Gtx7nzj4CXZc2605bCHiqAvTHA8gE4RznDM',
+                    description: '',
+                    images_product: ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT23pWgykESLk4y9Gtx7nzj4CXZc2605bCHiqAvTHA8gE4RznDM'],
                 },
             ],
             duration: 0,
-            day: [1, 2, 3, 4, 5, 6, 7],
             items: []
         }
     }
@@ -73,7 +47,7 @@ class Store extends Component {
     }
     rentCount(id, value) {
         this.setState(prevState => ({
-            product: prevState.product.map(obj => (obj.id === id ? Object.assign(obj, { rent: value }) : obj))
+            product: prevState.product.map(obj => (obj._id === id ? Object.assign(obj, { rent: value }) : obj))
         }))
     }
     rent = async () => {
@@ -81,11 +55,11 @@ class Store extends Component {
             items: this.state.product.filter(item => item.rent !== 0)
         })
         console.warn(this.state.items, this.state.duration)
-        if ( ! this.props.user.isLogin ) {
+        if (!this.props.user.isLogin) {
             this.props.navigation.navigate('Login')
         } else {
             if (this.state.items.length > 0 && this.state.duration > 0) {
-                let rent = { product: this.state.items, day: this.state.day }
+                let rent = { product: this.state.items, day: this.state.duration }
                 this.props.navigation.navigate('Transaksi', rent)
             } else {
                 let message
@@ -97,25 +71,34 @@ class Store extends Component {
                 Alert.alert('Peringatan', message)
             }
         }
-        
+
     }
-    componentDidMount(){
-        Axios.get('https://menung.herokuapp.com/partners',{ headers: { 'x-app-name': 'menung982998372771' }})
-        .then( data => {
-            console.warn(data.data.data)
-        })
+    componentDidMount() {
+        Axios.get('https://menung.herokuapp.com/partners/partner/5d385aa04ebb817e1526eebf', { headers: { 'x-app-name': 'menung982998372771' } })
+            .then(data => {
+                console.warn(data.data.data.products)
+                this.setState({
+                    longitude: data.data.data.location.coordinates[0],
+                    latitude: data.data.data.location.coordinates[0],
+                    nameStore: data.data.data.partner.name,
+                    address: data.data.data.partner.address,
+                    photo: data.data.data.image_mitra,
+                    desc: data.data.data.description,
+                    product: data.data.data.products
+                })
+            })
     }
     render() {
         return (
             <View style={{ flex: 1, }}>
                 <View style={{ flex: 2, flexDirection: 'row', margin: 10, borderColor: 'black', borderWidth: 2, borderRadius: 10 }}>
                     <Image source={{ uri: this.state.photo }} style={{ height: 100, width: 100, margin: 10, borderRadius: 10 }} />
-                    <View style={{ padding: 10 }}>
+                    <View style={{ padding: 10, flex: 1 }}>
                         <View style={{ alignSelf: 'flex-end', flexDirection: 'row' }}>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Maps',{ target: this.props.store })}>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Maps', { target: this.props.store })}>
                                 <Icon name='map-o' size={20} style={{ color: '#34c759' }} />
                             </TouchableOpacity>
-                            <TouchableOpacity style={{marginLeft: '5%'}} onPress={() => this.props.navigation.navigate('Chat')}>
+                            <TouchableOpacity style={{ marginLeft: '5%' }} onPress={() => this.props.navigation.navigate('Chat')}>
                                 <Icon name='wechat' size={20} style={{ color: '#34c759' }} />
                             </TouchableOpacity>
                         </View>
@@ -154,10 +137,10 @@ class Store extends Component {
                     <View style={{ flex: 6, borderTopColor: 'black', borderTopWidth: 2 }}>
                         <FlatList
                             data={this.state.product}
-                            renderItem={({ item, index }) => {
+                            renderItem={({ item }) => {
                                 return (
                                     <View style={{ flexDirection: 'row', margin: 10, backgroundColor: '#34c759', borderRadius: 10 }}>
-                                        <Image source={{ uri: item.photo }} style={{ height: 100, width: 100, margin: 10, borderRadius: 10 }} />
+                                        <Image source={{ uri: item.images_product[0] }} style={{ height: 100, width: 100, margin: 10, borderRadius: 10 }} />
                                         <View style={{ padding: 5, flex: 1 }}>
                                             <View style={{ flexDirection: 'row' }}>
                                                 <View style={{ flex: 2 }}>
@@ -166,16 +149,16 @@ class Store extends Component {
                                                     <Text style={{ color: 'white' }}>Ketersediaan</Text>
                                                 </View>
                                                 <View style={{ flex: 3 }}>
-                                                    <Text style={{ color: 'white' }} numberOfLines={1}>: {item.name}</Text>
-                                                    <Text style={{ color: 'white' }}>: {this.priceFormat(item.rentPrice)}</Text>
-                                                    <Text style={{ color: 'white' }}>: {item.stock}</Text>
+                                                    <Text style={{ color: 'white' }} numberOfLines={1}>: {item.name_product}</Text>
+                                                    <Text style={{ color: 'white' }}>: {this.priceFormat(item.price)}</Text>
+                                                    <Text style={{ color: 'white' }}>: {item.stok}</Text>
                                                 </View>
                                             </View>
                                             <View style={{ flexDirection: 'row' }}>
                                                 <NumericInput
-                                                    value={item.stock - item.stock}
+                                                    value={item.stok - item.stok}
                                                     onLimitReached={(isMax, msg) => console.warn(isMax, msg)}
-                                                    onChange={value => this.rentCount(item.id, value)} />
+                                                    onChange={value => this.rentCount(item._id, value)} />
                                                 <TouchableOpacity onPress={() => this.props.navigation.navigate('DetailProduct', item)}
                                                     style={{ backgroundColor: 'white', margin: 10, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
                                                     <Text style={{ fontSize: 12, padding: 5 }}>Detail</Text>
@@ -195,14 +178,21 @@ class Store extends Component {
                         </TouchableOpacity>
                     </View>
                 </View>
+                <View style={styles.buttonMap} >
+                                                    <TouchableOpacity style={Styles.iconBox3}
+                                                        onPress={() => this.props.navigation.goBack()}>
+                                                        <ImageBackground style={{ height: 44, width: 44 }}
+                                                            source={require('../Assets/Icons/back.png')} />
+                                                    </TouchableOpacity>
+                                                </View>
             </View>
         )
     }
 }
 
-const mapStateToProps= state => {
-	return {
-		user: state.user,
-	}
-  }
+const mapStateToProps = state => {
+    return {
+        user: state.user,
+    }
+}
 export default connect(mapStateToProps)(Store);

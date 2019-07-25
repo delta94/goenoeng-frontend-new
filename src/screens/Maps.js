@@ -1,7 +1,9 @@
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Alert, Dimensions, FlatList, Image } from 'react-native';
+import { View, Text, TouchableOpacity, Alert, Dimensions, FlatList, Image,ImageBackground } from 'react-native';
 import styles from '../Assets/Styles';
+import Styles from '../Assets/Style'
+import Icon from 'react-native-vector-icons/FontAwesome';
 const { width, height } = Dimensions.get('window')
 const ASPECT_RATIO = width / height;
 const LATITUDE = -7.7584436;
@@ -13,7 +15,7 @@ export default class Maps extends Component {
         super(props)
         const { navigation } = this.props;
         const target = navigation.getParam('target');
-        
+
         this.state = {
             latitude: LATITUDE,
             longitude: LONGITUDE,
@@ -27,18 +29,18 @@ export default class Maps extends Component {
         header: null
     }
     async componentDidMount() {
-       this.getLocation
+        this.getLocation
     }
     getLocation = async () =>
-    await Geolocation.getCurrentPosition(
-        async (position) => {
-            await this.setState({ longitude: position.coords.longitude, latitude: position.coords.latitude })
-        },
-        (error) => {
-            Alert.alert(error.code, error.message);
-        },
-        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-    )
+        await Geolocation.getCurrentPosition(
+            async (position) => {
+                await this.setState({ longitude: position.coords.longitude, latitude: position.coords.latitude })
+            },
+            (error) => {
+                Alert.alert(error.code, error.message);
+            },
+            { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+        )
     _renderItem = ({ item }) => {
         return (
             <TouchableOpacity style={styles.itemMap} onPress={() => {
@@ -81,7 +83,7 @@ export default class Maps extends Component {
                         latitude: this.state.latitude,
                         longitude: this.state.longitude,
                     }} title='YOU' pinColor='green' />
-                    { (this.state.store.length != 0) ? this.state.users.map(user => (
+                    {(this.state.store.length != 0) ? this.state.users.map(user => (
                         <Marker coordinate={{
                             latitude: user.latitude,
                             longitude: user.longitude
@@ -102,16 +104,17 @@ export default class Maps extends Component {
                                 </View>
                             </MapView.Callout>
                         </Marker>
-                    )) : <View/>
-                        }
+                    )) : <View />
+                    }
                 </MapView>
                 <View style={styles.buttonMap} >
-                    <TouchableOpacity style={styles.buttonMaps}>
-                    {// <Image source={{ uri: User.photo }} style={styles.imgMaps} />
-                    }
+                    <TouchableOpacity style={Styles.iconBox3}
+                        onPress={() => this.props.navigation.goBack()}>
+                        <ImageBackground style={{ height: 44, width: 44 }}
+                            source={require('../Assets/Icons/back.png')} />
                     </TouchableOpacity>
-                </View>
             </View>
+            </View >
         )
     }
 }

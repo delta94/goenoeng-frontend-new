@@ -9,8 +9,8 @@ const styles = StyleSheet.create({
     },
     buttonMap: {
         position: 'absolute',
-        top: 10,
-        left: 10,
+        top: 0,
+        left: 0,
         height: '10%',
         width: '20%'
     },

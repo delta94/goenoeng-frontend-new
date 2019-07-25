@@ -1,4 +1,4 @@
-import { createAppContainer, createBottomTabNavigator, createStackNavigator } from 'react-navigation';
+import { createAppContainer, createBottomTabNavigator, createStackNavigator, createSwitchNavigator } from 'react-navigation';
 import Login from '../screens/Login';
 import SignUp from '../screens/SignUp/Index';
 import Gateway from '../screens/Payment/Gateway';
@@ -32,7 +32,19 @@ const BottomNavigation = createBottomTabNavigator(
 
   }
 );
-
+// const Auth = createStackNavigator({
+//   Login:{
+//       screen:Login
+//   },
+//   Register:{
+//       screen:Register
+//   }
+// },
+// {
+//   defaultNavigationOptions: {
+//       header: null,
+//     }
+// })
 const AppNavigator = createStackNavigator({
   Home: {
     screen: BottomNavigation
