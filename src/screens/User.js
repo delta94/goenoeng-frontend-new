@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, ScrollView, AsyncStorage, Image, Text, TextInput, SafeAreaView, View, TouchableOpacity, StatusBar } from 'react-native';
+import { StyleSheet, KeyboardAvoidingView,ScrollView, AsyncStorage, Image, Text, TextInput, SafeAreaView, View, TouchableOpacity, StatusBar } from 'react-native';
 // import firebase from 'firebase'
 import { withNavigation } from 'react-navigation';
 import { Picker, Form, Container, Header, Left, Body, Right, Button, Icon, Title, Thumbnail, Footer, FooterTab } from 'native-base';
@@ -9,11 +9,12 @@ import { registerUser } from '../public/redux/actions/user';
 
 class User extends Component {
 	state = {
-		email: '',
-		name: '',
-		address: '',
-		password: '',
-		phone: 0,
+		email: null,
+		name: null,
+		address: null,
+		password: null,
+		passwordConfirm: null,
+		phone: null,
 		level: 'user'
 		// gender: 'Pria',
 		// filePath: {},
@@ -63,19 +64,57 @@ class User extends Component {
 		// 			status: 'offline'
 		// 		})
 
-				// Users.email = this.state.email
-				// Users.name = this.state.name
-				// Users.role = 'customer'
-				// Users.status = 'offline'
+		// Users.email = this.state.email
+		// Users.name = this.state.name
+		// Users.role = 'customer'
+		// Users.status = 'offline'
 
-			// 	alert("User " + this.state.name + " berhasil dibuat. otomatis login.")
-			// 	this.props.navigation.navigate('App')
-			// }, function (error) {
-			// 	alert("User gagal dibuat. Error: " + error.message);
-			// })
-		const { email,password,name,address,phone,level } = this.state;
-		this.props.dispatch( registerUser( email,password,name,address,phone,level )).then(()=> this.props.navigation.navigate('Home'))
-  	}
+		// 	alert("User " + this.state.name + " berhasil dibuat. otomatis login.")
+		// 	this.props.navigation.navigate('App')
+		// }, function (error) {
+		// 	alert("User gagal dibuat. Error: " + error.message);
+		// })
+		if (this.state.name == null) {
+			alert('nama tidak boleh kosong')
+		}
+		else if (this.state.address == null) {
+			alert('alamat tidak boleh kosong')
+		}
+		else if (this.state.email == null) {
+			alert('email tidak boleh kosong')
+		}
+		else if (this.state.phone == null) {
+			alert('nomor telepon tidak boleh kosong')
+		}
+		else if (this.state.password == null) {
+			alert('password tidak boleh kosong')
+		}
+		else if (this.state.name.length < 5) {
+			alert('nama minimal 5 karakter')
+		}
+		else if (this.state.email.length < 5) {
+			alert('email minimal 5 karakter')
+		}
+		else if (this.state.phone.length < 10) {
+			alert('nomor telepon minimal 10 karakter')
+		}
+		else if (this.state.password.length < 6) {
+			alert('password minimal 6 karakter')
+		}
+		else if (this.state.password != this.state.passwordConfirm) {
+			alert('password tidak sama dengan konfirmasi')
+		}
+		else {
+
+			const { email, password, name, address, phone, level } = this.state;
+			this.props.dispatch(registerUser(email, password, name, address, phone, level))
+			.then(() => {
+				this.props.navigation.navigate('Home')
+			}, function (error) {
+				alert("Email Sudah Terdaftar / Format Email Tidak Benar");
+			})
+		}
+	}
 
 	render() {
 		return (
@@ -93,7 +132,10 @@ class User extends Component {
 						<Text >Pilih Gambar Profil</Text>
 					</Button> */}
 					{/* <Form style={{alignSelf:'center', width:'100%', alignItems:'center'}}> */}
-					<TextInput
+					{/* <KeyboardAvoidingView> */}
+					<ScrollView style={{width:'100%', marginTop:'20%'}}>
+					<View style={[styles.container, { width: '100%' }]}>
+						<TextInput
 						placeholder="Nama"
 						autoCapitalize="none"
 						style={[styles.textInput, { marginBottom: 10 }]}
@@ -127,6 +169,7 @@ class User extends Component {
 						placeholder="Email"
 						autoCapitalize="none"
 						keyboardType="email-address"
+						minLength={3}
 						style={[styles.textInput, { marginBottom: 10 }]}
 						onChangeText={email => this.setState({ email })}
 						value={this.state.email}
@@ -134,6 +177,7 @@ class User extends Component {
 					<TextInput
 						placeholder="No Telepon"
 						autoCapitalize="none"
+						minLength={10}
 						keyboardType={'numeric'}
 						style={[styles.textInput, { marginBottom: 10 }]}
 						onChangeText={phone => this.setState({ phone })}
@@ -143,24 +187,36 @@ class User extends Component {
 						secureTextEntry
 						placeholder="Kata Sandi"
 						autoCapitalize="none"
+						minLength={6}
 						style={[styles.textInput, { marginBottom: 10 }]}
 						onChangeText={password => this.setState({ password })}
 						value={this.state.password}
 					/>
-					{/* </Form> */}
-					{/* </ScrollView> */}
-				</View>
-					<View style={{ padding: 14, alignSelf:'center' }}>
-						<Text>
-							Already have an account?&nbsp;
-							<Text onPress={() => this.props.navigation.navigate('Login')} style={styles.textBtn}>
-								Login
-							</Text>
-						</Text>
+					<TextInput
+						secureTextEntry
+						placeholder="Konfirmasi Kata Sandi"
+						autoCapitalize="none"
+						minLength={6}
+						style={[styles.textInput, { marginBottom: 10 }]}
+						onChangeText={passwordConfirm => this.setState({ passwordConfirm })}
+						value={this.state.passwordConfirm}
+					/>
 					</View>
+					</ScrollView>
+					{/* </KeyboardAvoidingView> */}
+					{/* </Form> */}
+				</View>
+				<View style={{ padding: 14, width:'100%',alignItems:'center', alignSelf: 'center', backgroundColor:'white' }}>
+					<Text>
+						Already have an account?&nbsp;
+							<Text onPress={() => this.props.navigation.navigate('Login')} style={styles.textBtn}>
+							Login
+							</Text>
+					</Text>
+				</View>
 				<View style={{ width: '100%' }}>
 					<TouchableOpacity onPress={this.handleSignUp} style={styles.inputBtn}>
-						<Text style={{ fontWeight: '500', color:'white', fontSize: 16 }}>Sign Up</Text>
+						<Text style={{ fontWeight: '500', color: 'white', fontSize: 16 }}>Sign Up</Text>
 					</TouchableOpacity>
 				</View>
 			</SafeAreaView>
@@ -196,9 +252,9 @@ const styles = StyleSheet.create({
 	},
 });
 
-const mapStateToProps= state => {
+const mapStateToProps = state => {
 	return {
 		user: state.user,
 	}
-  }
+}
 export default withNavigation(connect(mapStateToProps)(User))

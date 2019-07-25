@@ -17,6 +17,8 @@ class Login extends Component {
 		this.props.dispatch( login( email,password,level )).then(()=> {
 			this.props.navigation.goBack()
 			this.props.navigation.navigate('App')
+		}, function (error) {
+			alert("Gagal Masuk. Yang Bener Kalo Masukin Password sama Email!");
 		}
 		)
 	}
