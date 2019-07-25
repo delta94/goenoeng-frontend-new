@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, KeyboardAvoidingView,ScrollView, AsyncStorage, Image, Text, TextInput, SafeAreaView, View, TouchableOpacity, StatusBar } from 'react-native';
+import { StyleSheet, KeyboardAvoidingView, ScrollView, AsyncStorage, Image, Text, TextInput, SafeAreaView, View, TouchableOpacity, StatusBar } from 'react-native';
 // import firebase from 'firebase'
 import { withNavigation } from 'react-navigation';
 import { Picker, Form, Container, Header, Left, Body, Right, Button, Icon, Title, Thumbnail, Footer, FooterTab } from 'native-base';
@@ -15,6 +15,12 @@ class User extends Component {
 		password: null,
 		passwordConfirm: null,
 		phone: null,
+		errEmail: false,
+		errName: false,
+		errAddress: false,
+		errPassword: false,
+		errPasswordConfirm: false,
+		errPhone: false,
 		level: 'user'
 		// gender: 'Pria',
 		// filePath: {},
@@ -48,6 +54,85 @@ class User extends Component {
 	// 	});
 	// }
 
+	changeName = val => {
+		if (val.length < 5) {
+			this.setState({
+				errName: 'nama minimal 5 karakter'
+			})
+		}
+		else {
+			this.setState({
+				name: val,
+				errName: false
+			})
+		}
+	}
+
+	changeEmail = val => {
+		if (val.length < 5) {
+			this.setState({
+				errEmail: 'email minimal 5 karakter'
+			})
+		}
+		else {
+			this.setState({
+				email: val,
+				errEmail: false
+			})
+		}
+	}
+
+	changeAddress = val => {
+		
+			this.setState({
+				address: val,
+				errAddress: false
+			})
+		
+	}
+
+	changePassword = val => {
+		if (val.length < 6) {
+			this.setState({
+				errPassword: 'password minimal 6 karakter'
+			})
+		}
+		else {
+			this.setState({
+				password: val,
+				errPassword: false
+			})
+		}
+	}
+
+	changePasswordConfirm = val => {
+		if (this.state.password != val) {
+			this.setState({
+				errPasswordConfirm: 'password tidak sama dengan konfirmasi'
+			})
+		}
+		else {
+			this.setState({
+				passwordConfirm: val,
+				errPasswordConfirm: false
+			})
+		}
+	}
+
+	changePhone = val => {
+		if (val.length < 10) {
+			this.setState({
+				errPhone: 'nomor telepon minimal 10 karakter'
+			})
+		}
+		else {
+			this.setState({
+				phone: val,
+				errPhone: false
+			})
+		}
+	}
+
 	handleSignUp = () => {
 		// firebase.auth()
 		// 	.createUserWithEmailAndPassword(this.state.email, this.state.password)
@@ -74,40 +159,41 @@ class User extends Component {
 		// }, function (error) {
 		// 	alert("User gagal dibuat. Error: " + error.message);
 		// })
+
 		if (this.state.name == null) {
-			alert('nama tidak boleh kosong')
+			this.setState({
+				errName: 'nama tidak boleh kosong'
+			})
 		}
 		else if (this.state.address == null) {
-			alert('alamat tidak boleh kosong')
+			this.setState({
+				errAddress: 'alamat tidak boleh kosong'
+			})
 		}
 		else if (this.state.email == null) {
-			alert('email tidak boleh kosong')
+			this.setState({
+				errEmail: 'email tidak boleh kosong'
+			})
 		}
 		else if (this.state.phone == null) {
-			alert('nomor telepon tidak boleh kosong')
+			this.setState({
+				errPhone: 'nomor telepon tidak boleh kosong'
+			})
 		}
 		else if (this.state.password == null) {
-			alert('password tidak boleh kosong')
-		}
-		else if (this.state.name.length < 5) {
-			alert('nama minimal 5 karakter')
-		}
-		else if (this.state.email.length < 5) {
-			alert('email minimal 5 karakter')
-		}
-		else if (this.state.phone.length < 10) {
-			alert('nomor telepon minimal 10 karakter')
-		}
-		else if (this.state.password.length < 6) {
-			alert('password minimal 6 karakter')
+			this.setState({
+				errPassword: 'password tidak boleh kosong'
+			})
 		}
 		else if (this.state.password != this.state.passwordConfirm) {
-			alert('password tidak sama dengan konfirmasi')
+			this.setState({
+				errPasswordConfirm: 'password tidak sama dengan konfirmasi'
+			})
 		}
-		else {
+		else{
 
-			const { email, password, name, address, phone, level } = this.state;
-			this.props.dispatch(registerUser(email, password, name, address, phone, level))
+		const { email, password, name, address, phone, level } = this.state;
+		this.props.dispatch(registerUser(email, password, name, address, phone, level))
 			.then(() => {
 				this.props.navigation.navigate('Home')
 			}, function (error) {
@@ -133,25 +219,31 @@ class User extends Component {
 					</Button> */}
 					{/* <Form style={{alignSelf:'center', width:'100%', alignItems:'center'}}> */}
 					{/* <KeyboardAvoidingView> */}
-					<ScrollView style={{width:'100%', marginTop:'20%'}}>
-					<View style={[styles.container, { width: '100%' }]}>
-						<TextInput
-						placeholder="Nama"
-						autoCapitalize="none"
-						style={[styles.textInput, { marginBottom: 10 }]}
-						onChangeText={name => this.setState({ name })}
-						value={this.state.name}
-					/>
-					<TextInput
-						placeholder="Alamat"
-						autoCapitalize="none"
-						style={[styles.textInput, { marginBottom: 10 }]}
-						onChangeText={address => this.setState({ address })}
-						value={this.state.address}
-						multiline={true}
-						numberOfLines={3}
-					/>
-					{/* <Picker
+					<ScrollView style={{ width: '100%', marginTop: '20%' }}>
+						<View style={[styles.container, { width: '100%' }]}>
+							<TextInput
+								placeholder="Nama"
+								autoCapitalize="none"
+								style={[styles.textInput, { marginBottom: 10 }]}
+								onChangeText={this.changeName}
+								value={this.state.name}
+							/>
+							{
+								this.state.errName !== false ? <Text style={{ marginTop: 10, marginLeft: 5, color: '#ff0000' }}>{this.state.errName}</Text> : null
+							}
+							<TextInput
+								placeholder="Alamat"
+								autoCapitalize="none"
+								style={[styles.textInput, { marginBottom: 10 }]}
+								onChangeText={this.changeAddress}
+								value={this.state.address}
+								multiline={true}
+								numberOfLines={3}
+							/>
+							{
+								this.state.errAddress !== false ? <Text style={{ marginTop: 10, marginLeft: 5, color: '#ff0000' }}>{this.state.errAddress}</Text> : null
+							}
+							{/* <Picker
 						mode="dropdown"
 						style={[styles.textInput, { marginBottom: 10 }]}
 						iosIcon={<Icon style={{ color: 'white' }} name="md-arrow-dropdown" />}
@@ -165,48 +257,60 @@ class User extends Component {
 						<Picker.Item label="Pria" color='grey' value="Pria" />
 						<Picker.Item label="Wanita" color='grey' value="Wanita" />
 					</Picker> */}
-					<TextInput
-						placeholder="Email"
-						autoCapitalize="none"
-						keyboardType="email-address"
-						minLength={3}
-						style={[styles.textInput, { marginBottom: 10 }]}
-						onChangeText={email => this.setState({ email })}
-						value={this.state.email}
-					/>
-					<TextInput
-						placeholder="No Telepon"
-						autoCapitalize="none"
-						minLength={10}
-						keyboardType={'numeric'}
-						style={[styles.textInput, { marginBottom: 10 }]}
-						onChangeText={phone => this.setState({ phone })}
-						value={this.state.phone}
-					/>
-					<TextInput
-						secureTextEntry
-						placeholder="Kata Sandi"
-						autoCapitalize="none"
-						minLength={6}
-						style={[styles.textInput, { marginBottom: 10 }]}
-						onChangeText={password => this.setState({ password })}
-						value={this.state.password}
-					/>
-					<TextInput
-						secureTextEntry
-						placeholder="Konfirmasi Kata Sandi"
-						autoCapitalize="none"
-						minLength={6}
-						style={[styles.textInput, { marginBottom: 10 }]}
-						onChangeText={passwordConfirm => this.setState({ passwordConfirm })}
-						value={this.state.passwordConfirm}
-					/>
-					</View>
+							<TextInput
+								placeholder="Email"
+								autoCapitalize="none"
+								keyboardType="email-address"
+								minLength={3}
+								style={[styles.textInput, { marginBottom: 10 }]}
+								onChangeText={this.changeEmail}
+								value={this.state.email}
+							/>
+							{
+								this.state.errEmail !== false ? <Text style={{ marginTop: 10, marginLeft: 5, color: '#ff0000' }}>{this.state.errEmail}</Text> : null
+							}
+							<TextInput
+								placeholder="No Telepon"
+								autoCapitalize="none"
+								minLength={10}
+								keyboardType={'numeric'}
+								style={[styles.textInput, { marginBottom: 10 }]}
+								onChangeText={this.changePhone}
+								value={this.state.phone}
+							/>
+							{
+								this.state.errPhone !== false ? <Text style={{ marginTop: 10, marginLeft: 5, color: '#ff0000' }}>{this.state.errPhone}</Text> : null
+							}
+							<TextInput
+								secureTextEntry
+								placeholder="Kata Sandi"
+								autoCapitalize="none"
+								minLength={6}
+								style={[styles.textInput, { marginBottom: 10 }]}
+								onChangeText={this.changePassword}
+								value={this.state.password}
+							/>
+							{
+								this.state.errPassword !== false ? <Text style={{ marginTop: 10, marginLeft: 5, color: '#ff0000' }}>{this.state.errPassword}</Text> : null
+							}
+							<TextInput
+								secureTextEntry
+								placeholder="Konfirmasi Kata Sandi"
+								autoCapitalize="none"
+								minLength={6}
+								style={[styles.textInput, { marginBottom: 10 }]}
+								onChangeText={this.changePasswordConfirm}
+								value={this.state.passwordConfirm}
+							/>
+							{
+								this.state.errPasswordConfirm !== false ? <Text style={{ marginTop: 10, marginLeft: 5, color: '#ff0000' }}>{this.state.errPasswordConfirm}</Text> : null
+							}
+						</View>
 					</ScrollView>
 					{/* </KeyboardAvoidingView> */}
 					{/* </Form> */}
 				</View>
-				<View style={{ padding: 14, width:'100%',alignItems:'center', alignSelf: 'center', backgroundColor:'white' }}>
+				<View style={{ padding: 14, width: '100%', alignItems: 'center', alignSelf: 'center', backgroundColor: 'white' }}>
 					<Text>
 						Already have an account?&nbsp;
 							<Text onPress={() => this.props.navigation.navigate('Login')} style={styles.textBtn}>
