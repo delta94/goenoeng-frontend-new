@@ -53,10 +53,6 @@ export default class MountainDetail extends Component {
     }
 
     componentDidMount = async() => {
-        // let mountId = navigation.getParam("mountainId")
-        // axios.defaults.headers.get['Content-Type'] = 'application/x-www-form-urlencoded';
-        // const AuthStr = 'x-app-name '.concat("menung982998372771");
-
         await axios.get(`https://menung.herokuapp.com/partners/mountain/${this.state.mountainData._id}`, {
             headers: {
                 'x-app-name': 'menung982998372771'
@@ -165,7 +161,11 @@ export default class MountainDetail extends Component {
                                         })}>
                                     <FontAwesome style={{ fontSize: 20, color: '#34c759' }} name="wechat" />
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={this._logOut}
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('Maps',
+                                        {
+                                            target: [this.state.mountainData.location.coordinates[0],this.state.mountainData.location.coordinates[1], this.state.mountainData.name],
+                                            shops: this.state.shops,
+                                        })}
                                     style={{ marginLeft: '5%' }}>
                                     <FontAwesome style={{ fontSize: 20, color: '#34c759' }} name="map-o" />
                                 </TouchableOpacity>

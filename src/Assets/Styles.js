@@ -9,10 +9,10 @@ const styles = StyleSheet.create({
     },
     buttonMap: {
         position: 'absolute',
-        top: 0,
-        left: 0,
+        top: 10,
+        left: 10,
         height: '10%',
-        width: '20%'
+        width: '10%',
     },
     buttonMaps: {
         borderColor: 'white',

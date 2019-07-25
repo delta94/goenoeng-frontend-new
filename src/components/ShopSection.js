@@ -25,7 +25,6 @@ class ShopSectionlist extends Component {
                 'x-app-name':'menung982998372771'
             }
         }).then(response => {
-            console.log(response)
             this.setState({shop: response.data.data})
         })
         this.setState({isLoading:false})
@@ -46,7 +45,7 @@ class ShopSectionlist extends Component {
                         />
                         {/* <View style={{flexDirection:'row', justifyContent}}> */}
                         <TouchableOpacity style={styles.goShop}
-                        onPress={ () => this.props.navigation.navigate('Store') }>
+                        onPress={ () => this.props.navigation.navigate('Store',item) }>
                             <Text style={{ color: 'white' }}>{"Go to Shop"}</Text>
                         </TouchableOpacity>
                         {/* </View> */}

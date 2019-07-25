@@ -43,11 +43,11 @@ class Login extends Component {
 						placeholder="Pilih Sebagai"
 						placeholderStyle={{ color: "white" }}
 						placeholderIconColor="white"
-						selectedValue={this.state.privilege}
+						selectedValue={this.state.level}
 						onValueChange={this.onValueChange.bind(this)}
 					>
-						<Picker.Item label="Customer" color='grey' value="Customer" />
-						<Picker.Item label="Partner" color='grey' value="Partner" />
+						<Picker.Item label="Customer" color='grey' value="user" />
+						<Picker.Item label="Partner" color='grey' value="partner" />
 					</Picker>
 					<TextInput
 						secureTextEntry

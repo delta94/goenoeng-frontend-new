@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Text, View, Image, Dimensions,TouchableOpacity, ImageBackground } from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import { Text, View, Image, Dimensions } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
-import Styles from '../Assets/Style';
-import styles from '../Assets/Styles';
+import HeaderBack from '../components/HeaderBack';
+
 const { height, width } = Dimensions.get('window')
 
 class DetailProduct extends Component {
@@ -48,6 +47,7 @@ class DetailProduct extends Component {
     render() {
         return (
             <View style={{ flex: 1, }}>
+                <HeaderBack title={'Detail Barang'} navigation={this.props.navigation}/>
                 <View style={{ height: 500, flex: 2 }}>
                     <Carousel
                         ref={ref => this.carousel = ref}
@@ -60,13 +60,6 @@ class DetailProduct extends Component {
 
                         }
                     />
-                    <View style={styles.buttonMap} >
-                    <TouchableOpacity style={Styles.iconBox3}
-                        onPress={() => this.props.navigation.goBack()}>
-                        <ImageBackground style={{ height: 44, width: 44 }}
-                            source={require('../Assets/Icons/back.png')} />
-                    </TouchableOpacity>
-            </View>
                 </View>
                 <View style={{ padding: 5, flex: 2 }}>
                     <View style={{ flexDirection: 'row',flex: 1 }}>

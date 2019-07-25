@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
-import { Text, View, Image, FlatList, Picker, TouchableOpacity, Alert,ImageBackground } from 'react-native';
+import { Text, View, Image, FlatList, Picker, TouchableOpacity, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import NumericInput from 'react-native-numeric-input';
 import Axios from 'axios';
 import { connect } from 'react-redux';
-import styles from '../Assets/Styles';
-import Styles from '../Assets/Style'
+import HeaderBack from '../components/HeaderBack';
 
 class Store extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            modalVisible: false,
+            idStore: props.navigation.getParam('_id'),
             nameStore: '',
             address: '',
             desc: '',
@@ -71,15 +70,14 @@ class Store extends Component {
                 Alert.alert('Peringatan', message)
             }
         }
-
     }
     componentDidMount() {
-        Axios.get('https://menung.herokuapp.com/partners/partner/5d385aa04ebb817e1526eebf', { headers: { 'x-app-name': 'menung982998372771' } })
+        Axios.get('https://menung.herokuapp.com/partners/partner/'+this.state.idStore, { headers: { 'x-app-name': 'menung982998372771' } })
             .then(data => {
                 console.warn(data.data.data.products)
                 this.setState({
                     longitude: data.data.data.location.coordinates[0],
-                    latitude: data.data.data.location.coordinates[0],
+                    latitude: data.data.data.location.coordinates[1],
                     nameStore: data.data.data.partner.name,
                     address: data.data.data.partner.address,
                     photo: data.data.data.image_mitra,
@@ -91,11 +89,12 @@ class Store extends Component {
     render() {
         return (
             <View style={{ flex: 1, }}>
+                <HeaderBack title={'Toko'} navigation={this.props.navigation}/>
                 <View style={{ flex: 2, flexDirection: 'row', margin: 10, borderColor: 'black', borderWidth: 2, borderRadius: 10 }}>
                     <Image source={{ uri: this.state.photo }} style={{ height: 100, width: 100, margin: 10, borderRadius: 10 }} />
                     <View style={{ padding: 10, flex: 1 }}>
                         <View style={{ alignSelf: 'flex-end', flexDirection: 'row' }}>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Maps', { target: this.props.store })}>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Maps', { target: [this.state.longitude,this.state.latitude,this.state.nameStore] })}>
                                 <Icon name='map-o' size={20} style={{ color: '#34c759' }} />
                             </TouchableOpacity>
                             <TouchableOpacity style={{ marginLeft: '5%' }} onPress={() => this.props.navigation.navigate('Chat')}>
@@ -178,13 +177,6 @@ class Store extends Component {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <View style={styles.buttonMap} >
-                                                    <TouchableOpacity style={Styles.iconBox3}
-                                                        onPress={() => this.props.navigation.goBack()}>
-                                                        <ImageBackground style={{ height: 44, width: 44 }}
-                                                            source={require('../Assets/Icons/back.png')} />
-                                                    </TouchableOpacity>
-                                                </View>
             </View>
         )
     }

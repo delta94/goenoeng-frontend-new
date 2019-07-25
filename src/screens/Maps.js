@@ -2,45 +2,30 @@ import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Alert, Dimensions, FlatList, Image,ImageBackground } from 'react-native';
 import styles from '../Assets/Styles';
-import Styles from '../Assets/Style'
-import Icon from 'react-native-vector-icons/FontAwesome';
 const { width, height } = Dimensions.get('window')
 const ASPECT_RATIO = width / height;
-const LATITUDE = -7.7584436;
-const LONGITUDE = 110.3759749;
-const LATITUDE_DELTA = 0.0103;
+const LATITUDE_DELTA = 0.031;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 export default class Maps extends Component {
     constructor(props) {
         super(props)
         const { navigation } = this.props;
         const target = navigation.getParam('target');
-
         this.state = {
-            latitude: LATITUDE,
-            longitude: LONGITUDE,
+            nameStore: target[2],
+            latitude: target[1],
+            longitude: target[0],
             latitudeDelta: LATITUDE_DELTA,
             longitudeDelta: LONGITUDE_DELTA,
-            store: (navigation.getParam('store') != null) ? navigation.getParam('store') : [],
-            users: [],
+            store: (navigation.getParam('shops') != null) ? navigation.getParam('shops') : [],
         }
     }
     static navigationOptions = {
         header: null
     }
     async componentDidMount() {
-        this.getLocation
+       //await this.getLocation()
     }
-    getLocation = async () =>
-        await Geolocation.getCurrentPosition(
-            async (position) => {
-                await this.setState({ longitude: position.coords.longitude, latitude: position.coords.latitude })
-            },
-            (error) => {
-                Alert.alert(error.code, error.message);
-            },
-            { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-        )
     _renderItem = ({ item }) => {
         return (
             <TouchableOpacity style={styles.itemMap} onPress={() => {
@@ -66,6 +51,7 @@ export default class Maps extends Component {
         return (
             <View style={styles.containerMap}>
                 <MapView
+                    showsUserLocation={true}
                     ref={(mapView) => { _mapView = mapView }}
                     style={{ flex: 1, width: width, }}
                     provider={PROVIDER_GOOGLE}
@@ -78,41 +64,24 @@ export default class Maps extends Component {
                     <Marker coordinate={{
                         latitude: this.state.latitude,
                         longitude: this.state.longitude,
-                    }} title='YOU' pinColor='green' />
-                    <Marker coordinate={{
-                        latitude: this.state.latitude,
-                        longitude: this.state.longitude,
-                    }} title='YOU' pinColor='green' />
-                    {(this.state.store.length != 0) ? this.state.users.map(user => (
+                    }} title={this.state.nameStore} pinColor='red' />
+                    {(this.state.store.length != 0) ? this.state.store.map(store => (
                         <Marker coordinate={{
-                            latitude: user.latitude,
-                            longitude: user.longitude
-                        }}>
-                            <MapView.Callout tooltip={false}>
-                                <View style={styles.viewMap}>
-                                    <Image source={{ uri: user.photo }} style={styles.imgMap} />
-                                    <View style={{ width: '20%' }}>
-                                        <Text>Name </Text>
-                                        <Text>Email</Text>
-                                        <Text>Telp </Text>
-                                    </View>
-                                    <View style={{ width: '50%' }}>
-                                        <Text numberOfLines={1}>:{user.name}</Text>
-                                        <Text numberOfLines={1}>:{user.email}</Text>
-                                        <Text>:{user.telp}</Text>
-                                    </View>
-                                </View>
-                            </MapView.Callout>
+                            latitude: store.location.coordinates[1],
+                            longitude: store.location.coordinates[0]
+                        }} title={store.partner.name} pinColor='blue' >
+                            
                         </Marker>
                     )) : <View />
                     }
                 </MapView>
                 <View style={styles.buttonMap} >
-                    <TouchableOpacity style={Styles.iconBox3}
-                        onPress={() => this.props.navigation.goBack()}>
-                        <ImageBackground style={{ height: 44, width: 44 }}
-                            source={require('../Assets/Icons/back.png')} />
-                    </TouchableOpacity>
+                <TouchableOpacity style={{ backgroundColor: 'white',
+        borderRadius: 100,
+        borderWidth: 2}} onPress={() => this.props.navigation.goBack()}>
+                    <Image style={{marginLeft: 2, width: 28, height: 28, opacity: 0.9}}
+                           source={require('../Assets/Icons/ic_back.png')}/>
+                </TouchableOpacity>
             </View>
             </View >
         )
