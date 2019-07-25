@@ -74,7 +74,7 @@ class Store extends Component {
     componentDidMount() {
         Axios.get('https://menung.herokuapp.com/partners/partner/'+this.state.idStore, { headers: { 'x-app-name': 'menung982998372771' } })
             .then(data => {
-                console.warn(data.data.data.products)
+                //console.warn(data.data.data)
                 this.setState({
                     longitude: data.data.data.location.coordinates[0],
                     latitude: data.data.data.location.coordinates[1],
@@ -94,10 +94,20 @@ class Store extends Component {
                     <Image source={{ uri: this.state.photo }} style={{ height: 100, width: 100, margin: 10, borderRadius: 10 }} />
                     <View style={{ padding: 10, flex: 1 }}>
                         <View style={{ alignSelf: 'flex-end', flexDirection: 'row' }}>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Maps', { target: [this.state.longitude,this.state.latitude,this.state.nameStore] })}>
+                            <TouchableOpacity onPress={() => {
+                                let { longitude, latitude, nameStore } = this.state
+                                this.props.navigation.navigate('Maps', 
+                                { target: [longitude,latitude,nameStore] })
+                                }}>
                                 <Icon name='map-o' size={20} style={{ color: '#34c759' }} />
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ marginLeft: '5%' }} onPress={() => this.props.navigation.navigate('Chat')}>
+                            <TouchableOpacity style={{ marginLeft: '5%' }} onPress={() => {
+                                let { idStore, nameStore, photo } = this.state
+                                let store= { idStore: idStore, nameStore: nameStore, photo: photo }
+                                
+                                let chat = { sender: this.props.user.user, receiver: store }
+                                this.props.navigation.navigate('Chat', chat)
+                                }}>
                                 <Icon name='wechat' size={20} style={{ color: '#34c759' }} />
                             </TouchableOpacity>
                         </View>
@@ -157,7 +167,7 @@ class Store extends Component {
                                                 <NumericInput
                                                     value={item.stok - item.stok}
                                                     maxValue={item.stok}
-                                                    minValue={1}
+                                                    minValue={0}
                                                     onChange={value => this.rentCount(item._id, value)} />
                                                 <TouchableOpacity onPress={() => this.props.navigation.navigate('DetailProduct', item)}
                                                     style={{ backgroundColor: 'white', margin: 10, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>

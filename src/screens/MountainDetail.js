@@ -1,15 +1,16 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, Dimensions, TextInput, SafeAreaView, Image, Alert, ScrollView, AsyncStorage } from 'react-native'
+import { View, Text, TouchableOpacity, Dimensions, TextInput, SafeAreaView, Image, ScrollView, AsyncStorage } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Carousel from 'react-native-snap-carousel'
 import { Container, Header, Left, Body, Right, Button, Icon, Title, Thumbnail, Footer, FooterTab } from 'native-base';
 import axios from 'axios'
 import NumberFormat from 'react-number-format';
 import firebase from 'firebase'
+import { connect } from 'react-redux';
 
 const { height, width } = Dimensions.get('window')
 
-export default class MountainDetail extends Component {
+class MountainDetail extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -52,7 +53,7 @@ export default class MountainDetail extends Component {
             this.carousel._snapToItem(this.state.activeIndex + 1) : this.carousel._snapToItem(0)
     }
 
-    componentDidMount = async() => {
+    componentDidMount = async () => {
         await axios.get(`https://menung.herokuapp.com/partners/mountain/${this.state.mountainData._id}`, {
             headers: {
                 'x-app-name': 'menung982998372771'
@@ -68,36 +69,36 @@ export default class MountainDetail extends Component {
             .catch((error) => {
                 console.warn(error)
             })
-            
-            // console.warn('nama', this.state.partner);
+
+        // console.warn('nama', this.state.partner);
     }
 
-    realtimeListener = async () => {
-        await firebase.database().ref('users/').on('child_added', (value) => {
-            let person = value.val()
-            // console.warn('masuk', value.val());
-            person.userId = value.key
-            person.manage = value.val().manage
-            // console.warn('masuk', value.val().manage);
-            if (person.userId === Users.id) {
-                Users.name = person.name
-                Users.email = person.email
-                Users.status = person.status
-            }
-            else {
-                // console.warn('id', this.state.mountainData._id)
-                // console.warn('person',person.manage)
-                if (person.manage === this.state.mountainData._id) {
-                    // console.warn('masuk', person.name);
-                    this.setState((prevState) => {
-                        return {
-                            partner: [...prevState.partner, person]
-                        }
-                    })
-                }
-            }
-        })
-    }
+    // realtimeListener = async () => {
+    //     await firebase.database().ref('users/').on('child_added', (value) => {
+    //         let person = value.val()
+    //         // console.warn('masuk', value.val());
+    //         person.userId = value.key
+    //         person.manage = value.val().manage
+    //         // console.warn('masuk', value.val().manage);
+    //         if (person.userId === Users.id) {
+    //             Users.name = person.name
+    //             Users.email = person.email
+    //             Users.status = person.status
+    //         }
+    //         else {
+    //             // console.warn('id', this.state.mountainData._id)
+    //             // console.warn('person',person.manage)
+    //             if (person.manage === this.state.mountainData._id) {
+    //                 // console.warn('masuk', person.name);
+    //                 this.setState((prevState) => {
+    //                     return {
+    //                         partner: [...prevState.partner, person]
+    //                     }
+    //                 })
+    //             }
+    //         }
+    //     })
+    // }
 
     // fetchMountain = async () => {
     //     await axios.get(`https://menung.herokuapp.com/mountains/5d3642762084e22404f9f2d2`)
@@ -111,18 +112,18 @@ export default class MountainDetail extends Component {
     //         });
     // }
 
-    _logOut = async () => {
-        await firebase.database().ref('users/' + Users.id).update({
-            status: 'offline'
-        })
-        await AsyncStorage.clear();
-        Users.email = null
-        Users.name = null
-        Users.id = null
-        Users.status = null
-        Users.role = null
-        this.props.navigation.navigate('Auth');
-    }
+    // _logOut = async () => {
+    //     await firebase.database().ref('users/' + Users.id).update({
+    //         status: 'offline'
+    //     })
+    //     await AsyncStorage.clear();
+    //     Users.email = null
+    //     Users.name = null
+    //     Users.id = null
+    //     Users.status = null
+    //     Users.role = null
+    //     this.props.navigation.navigate('Auth');
+    // }
 
     render() {
         return (
@@ -154,18 +155,20 @@ export default class MountainDetail extends Component {
                             <Text style={{ fontSize: 16, color: '#34c759', fontWeight: 'bold' }}>Detail</Text>
                             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
                                 <TouchableOpacity
-                                    onPress={() => this.props.navigation.navigate('Chat',
-                                        {
-                                            name: this.state.partner[0].name,
-                                            userId: this.state.partner[0].userId,
-                                        })}>
+                                    onPress={() => {
+                                        let { _id, name, images } = this.state.mountainData
+                                        let store = { idStore: _id, nameStore: name, photo: images }
+                                        let chat = { sender: this.props.user.user, receiver: store }
+                                        this.props.navigation.navigate('Chat', chat)
+                                    }
+                                    }>
                                     <FontAwesome style={{ fontSize: 20, color: '#34c759' }} name="wechat" />
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => this.props.navigation.navigate('Maps',
-                                        {
-                                            target: [this.state.mountainData.location.coordinates[0],this.state.mountainData.location.coordinates[1], this.state.mountainData.name],
-                                            shops: this.state.shops,
-                                        })}
+                                    {
+                                        target: [this.state.mountainData.location.coordinates[0], this.state.mountainData.location.coordinates[1], this.state.mountainData.name],
+                                        shops: this.state.shops,
+                                    })}
                                     style={{ marginLeft: '5%' }}>
                                     <FontAwesome style={{ fontSize: 20, color: '#34c759' }} name="map-o" />
                                 </TouchableOpacity>
@@ -290,3 +293,9 @@ export default class MountainDetail extends Component {
         )
     }
 }
+const mapStateToProps = state => {
+    return {
+        user: state.user,
+    }
+}
+export default connect(mapStateToProps)(MountainDetail);

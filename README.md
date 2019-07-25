@@ -13,7 +13,7 @@
 
 ## Introduction
 
-Menung is a mobile application that makes it easy for you to rent outdoor equipment based on the closest distance from the mountain you want to climb, and at the same time you can directly register for mountain climbing or just hiking.
+Goenoeng is a mobile application that makes it easy for you to rent outdoor equipment based on the closest distance from the mountain you want to climb, and at the same time you can directly register for mountain climbing or just hiking.
 
 The application can also facilitate the access of tourists to be easier to travel, in addition to the benefits obtained by travelers this application also opens the outdoor equipment market in Indonesia.
 

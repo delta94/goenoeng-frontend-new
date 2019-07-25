@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { createAppContainer, createBottomTabNavigator, createStackNavigator, createSwitchNavigator } from 'react-navigation';
 import { Image, StyleSheet } from 'react-native';
 import Login from '../screens/Login';
-import SignUp from '../screens/Index';
+// import SignUp from '../screens/Index';
+import SignUp from '../screens/SignUp/Index';
 import Gateway from '../screens/Payment/Gateway';
 import Receipt from '../screens/Payment/Receipt';
 import Store from '../screens/Store';
@@ -21,15 +22,18 @@ import MountainDetail from '../screens/MountainDetail'
 import BookingMountain from '../screens/BookingMountain'
 import Chat from '../screens/Chat'
 import AuthLoading from '../screens/AuthLoading';
-import User from '../screens/User';
-import Mitra from '../screens/Mitra';
+import Mitra from '../screens/SignUp/Mitra'
+import User from '../screens/SignUp/User'
+// import User from '../screens/User';
+// import Mitra from '../screens/Mitra';
 import History from '../screens/History'
+import MidProfile from '../screens/MidProfile'
 
 const BottomNavigation = createBottomTabNavigator(
   {
-    Home: Home,
+    Home: Home, 
     History: History,
-    Profile: ProfileUser,
+    Profile: MidProfile,
   },
   {
     defaultNavigationOptions: ({navigation}) => ({
@@ -68,19 +72,6 @@ const BottomNavigation = createBottomTabNavigator(
     })
   }
 );
-// const Auth = createStackNavigator({
-//   Login:{
-//       screen:Login
-//   },
-//   Register:{
-//       screen:Register
-//   }
-// },
-// {
-//   defaultNavigationOptions: {
-//       header: null,
-//     }
-// })
 const AppNavigator = createStackNavigator({
   Home: {
     screen: BottomNavigation
@@ -109,6 +100,33 @@ const AppNavigator = createStackNavigator({
   AddProduct: {
     screen: AddProduct
   },
+  MidProfile: {
+    screen: BottomNavigation
+  },
+  ProfileStore: {
+    screen: ProfileStore
+  },
+  Store: {
+    screen: Store
+  },
+  DetailProduct: {
+    screen: DetailProduct
+  },
+  Maps: {
+    screen: Maps
+  },
+  Gateway: {
+    screen: Gateway
+  },
+  Login: {
+    screen: Login
+  },
+  SignUp: {
+    screen: SignUp
+  },
+  ManageProduct: {
+    screen: ManageProduct
+  },
   Mountain: {
     screen: Mountain
   },
@@ -122,10 +140,7 @@ const AppNavigator = createStackNavigator({
     screen: EditProfileUser
   },
   ProfileUser: {
-    screen: ProfileUser
-  },
-  ProfileStore: {
-    screen: ProfileStore
+    screen: BottomNavigation
   },
   Transaction: {
     screen: Transaction
