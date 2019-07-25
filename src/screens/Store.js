@@ -80,7 +80,7 @@ class Store extends Component {
                     latitude: data.data.data.location.coordinates[1],
                     nameStore: data.data.data.partner.name,
                     address: data.data.data.partner.address,
-                    photo: data.data.data.image_mitra,
+                    photo: data.data.data.image,
                     desc: data.data.data.description,
                     product: data.data.data.products
                 })
@@ -156,7 +156,8 @@ class Store extends Component {
                                             <View style={{ flexDirection: 'row' }}>
                                                 <NumericInput
                                                     value={item.stok - item.stok}
-                                                    onLimitReached={(isMax, msg) => console.warn(isMax, msg)}
+                                                    maxValue={item.stok}
+                                                    minValue={1}
                                                     onChange={value => this.rentCount(item._id, value)} />
                                                 <TouchableOpacity onPress={() => this.props.navigation.navigate('DetailProduct', item)}
                                                     style={{ backgroundColor: 'white', margin: 10, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
