@@ -1,4 +1,6 @@
+import React, { Component } from 'react';
 import { createAppContainer, createBottomTabNavigator, createStackNavigator, createSwitchNavigator } from 'react-navigation';
+import { Image, StyleSheet } from 'react-native';
 import Login from '../screens/Login';
 import SignUp from '../screens/Index';
 import Gateway from '../screens/Payment/Gateway';
@@ -30,7 +32,40 @@ const BottomNavigation = createBottomTabNavigator(
     Profile: ProfileUser,
   },
   {
-
+    defaultNavigationOptions: ({navigation}) => ({
+      tabBarIcon: ({focused, horizontal, tintColor}) => {
+        const {routeName} = navigation.state;
+        if (routeName === 'Home') {
+          return (
+            focused ?
+              <Image style={styles.icon}
+                     source={require('../../src/Assets/Icons/Green_Home_100px.png')}/> :
+              <Image style={styles.icon} source={require('../../src/Assets/Icons/Home_100px.png')}/>
+          );
+        }else if (routeName === 'History') {
+          return (
+            focused ?
+              <Image style={styles.icon}
+                     source={require('../../src/Assets/Icons/Green_US_Dollar_100px.png')}/> :
+              <Image style={styles.icon} source={require('../../src/Assets/Icons/US_Dollar_100px.png')}/>
+          );
+        }else if (routeName === 'Profile') {
+          return (
+            focused ?
+              <Image style={styles.icon}
+                     source={require('../../src/Assets/Icons/Green_User_100px.png')}/> :
+              <Image style={styles.icon} source={require('../../src/Assets/Icons/User_100px.png')}/>
+          );
+        }
+      },
+      tabBarOptions: {
+          activeTintColor: '#34c759',
+          style: {
+              paddingVertical: 6,
+          },
+          keyboardHidesTabBar: true,
+      }
+    })
   }
 );
 // const Auth = createStackNavigator({
@@ -146,3 +181,9 @@ export default createAppContainer(createSwitchNavigator(
   }
 ));
 // export default createAppContainer(AppNavigator);
+const styles = StyleSheet.create({
+    icon: {
+        width: 25,
+        height: 25,
+    }
+});
