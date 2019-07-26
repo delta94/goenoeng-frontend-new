@@ -145,10 +145,10 @@ export const editProduct = (token, data) => {
     }
 }  
 
-exports.createTransaction = (data, playerId, token) => {
+exports.createTransaction = (endpoint, data, playerId, token) => {
     return {
         type: 'ADD_TRANSACTION',
-        payload: axios.post(`https://menung.herokuapp.com/rental-transaction?playerId=${playerId}`, data, {
+        payload: axios.post(`https://menung.herokuapp.com/${endpoint}?playerId=${playerId}`, data, {
 			headers: { 'x-app-name': 'menung982998372771', 'x-auth-token': token }
 		})
     }
