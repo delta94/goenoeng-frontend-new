@@ -217,6 +217,7 @@ class Mitra extends Component {
 					</TouchableOpacity>
 				</View>
 			</SafeAreaView>
+			
 		)
 	}
 }

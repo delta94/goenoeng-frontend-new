@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, Image, Dimensions } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import HeaderBack from '../components/HeaderBack';
+
 const { height, width } = Dimensions.get('window')
 
 class DetailProduct extends Component {

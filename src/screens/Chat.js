@@ -13,7 +13,7 @@ export default class Chat extends React.Component {
             // uid: "user",
             person: props.navigation.getParam('receiver'),
             //uid: props.navigation.getParam('sender'),
-            myUid: uid._id,
+            myUid: uid.user._id,
             myName: uid.user.name,
             myAvatar: uid.image,
             text: '',

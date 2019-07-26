@@ -3,12 +3,10 @@ import {
     View,
     Text,
     StyleSheet,
-    SafeAreaView,
     Image,
     FlatList,
     TouchableOpacity,
 } from "react-native";
-import Moment from 'react-moment';
 import moment from 'moment'
 
 let total = 0
@@ -20,15 +18,19 @@ class Transaction extends Component {
         super(props)
         this.state = {
             total: 0,
-            lama: 7,
-            transaction: this.props.navigation.state.params
+            lama: this.props.navigation.state.params.day,
+            transaction: this.props.navigation.state.params,
         }
     }
 
     componentWillMount() {
-        // this.state.transaction.map((item) => {
-        //     total += parseInt(item.hargaBarang)
-        // })
+        this.state.transaction.product.map((item) => {
+            total += parseInt(item.price * item.rent)
+        })
+    }
+
+    componentWillUnmount() {
+        total = 0
     }
 
     priceFormat(number) {
@@ -57,12 +59,35 @@ class Transaction extends Component {
                 <View>
                     <Text style={styles.title}>Detail transaksi</Text>
                 </View>
-                
+                <FlatList
+                    data={this.state.transaction.product}
+                    keyExtractor={this.keyExtractor}
+                    renderItem={({ item, total }) => {
+                        return (
+                            <View style={styles.flatList}>
+                                <Image
+                                    source={{ uri: item.images_product[0] }}
+                                    style={styles.image}
+                                />
+                                <View style={styles.containerText}>
+                                    <View style={{ flexDirection: 'row' }}>
+                                        <Text style={{ fontSize: 17, color: '#ffffff', flex: 6}}>{item.name_product}</Text>
+                                        <Text style={{ fontSize: 17, color: '#ffffff', flex: 1}}>{item.rent}x</Text>
+                                    </View>
+                                    <Text style={{ fontSize: 20, color: '#ffff00', }}>{this.priceFormat(item.price * item.rent)}</Text>
+                                    <Text style={{ fontSize: 15, color: '#ffffff', }}>Tanggal pinjam {dateNow}</Text>
+                                    <Text style={{ fontSize: 15, color: '#ffffff', }}>Tanggal kembali {dateAgo}</Text>
+                                </View>
+                            </View>
+                        )
+                    }
+                    }
+                />
                 <View style={styles.total}>
                     <Text style={styles.textTotal}>Total Price</Text>
                     < Text style={styles.numberTotal} >{this.priceFormat(total)}</Text>
                 </View>
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('Gateway', {total, transaction: this.state.transaction, lama: this.state.lama, dateNow, dateAgo})}>
                     <Text style={{ fontSize: 25 }}>SEWA</Text>
                 </TouchableOpacity>
             </View>

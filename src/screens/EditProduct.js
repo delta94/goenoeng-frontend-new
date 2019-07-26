@@ -2,23 +2,36 @@ import React, { Component } from 'react';
 import { Alert, AsyncStorage, Platform, Text, View, TextInput, ImageBackground, TouchableOpacity, ScrollView, KeyboardAvoidingView } from 'react-native';
 import styles from '../Assets/Style'
 import ImagePicker from 'react-native-image-picker'
-import {addProduct} from '../public/redux/actions/store_product'
+import {editProduct} from '../public/redux/actions/user'
 import {connect} from 'react-redux'
+// import { get } from 'http';
 // import console = require('console');
 
-class AddProduct extends Component {
+class EditProduct extends Component {
     constructor(props) {
         super(props)
         this.state = {
             stock: 0,
-           // imagephoto: require('../Assets/Icons/Placeholder.jpg'),
-           imagephoto: require('../Assets/Icons/Pencil_100px.png'),
+            imagephoto: '',
             imageProfile: '',
             name: '',
             price: '',
             description: ''
 
         }
+    }
+
+    componentDidMount(){
+        const {navigation} = this.props;
+        this.setState({
+            stock: navigation.getParam('stock', null),
+            imagephoto: navigation.getParam('image', null),
+            imageProfile: '',
+            name: navigation.getParam('name', null),
+            price: navigation.getParam('price', null),
+            description: navigation.getParam('description', null),
+            id: navigation.getParam('id', null)
+        })
     }
     back = () => {
         const { navigation } = this.props
@@ -52,8 +65,8 @@ class AddProduct extends Component {
         let data = await AsyncStorage.getItem('token')
         // let data = await AsyncStorage.getItem('level')
         console.log(state)
-        if(state.name !== '' && state.price !== '' && state.description !== '' && state.imageProfile !== '' && state.stock > 0){
-          this.props.dispatch(addProduct(data, this.state)).then(
+        if(state.name !== '' && state.price !== '' && state.description !== ''  && state.stock > 0){
+          this.props.dispatch(editProduct(data, this.state)).then(
              () => this.props.navigation.goBack()
           )
         }else{
@@ -62,6 +75,8 @@ class AddProduct extends Component {
     }
 
     render() {
+        console.log("this.state")
+        console.log(this.state)
         return (
             <View style={styles.container}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -70,7 +85,7 @@ class AddProduct extends Component {
                             source={require('../Assets/Icons/back.png')} />
                     </TouchableOpacity>
                     <View style={styles.headBox}>
-                        <Text style={styles.headTitle} >Add Product</Text>
+                        <Text style={styles.headTitle} >EDIT Product</Text>
                     </View>
                 </View>
                 {/* <View style={}> */}
@@ -85,7 +100,7 @@ class AddProduct extends Component {
                                             source={this.state.imageProfile}></ImageBackground> :
                                         <ImageBackground
                                             style={styles.inputBoxImage}
-                                            source={this.state.imagephoto}></ImageBackground>
+                                            source={{uri : this.state.imagephoto[0]}}></ImageBackground>
                                     }
                                 </TouchableOpacity>
                             </View>
@@ -94,20 +109,20 @@ class AddProduct extends Component {
                             <Text style={{ fontSize: 18 }}>Name</Text>
                             <TextInput style={styles.inputTextAdd} 
                             onChangeText={text => this.setState({name: text})}
-                            placeholder={"Product Name..."}></TextInput>
+                            placeholder={"Product Name..."}>{this.state.name}</TextInput>
                         </View>
                         <View style={styles.inputBox}>
                             <Text style={{ fontSize: 18 }}>Price</Text>
                             <TextInput style={styles.inputTextAdd}
                                 keyboardType="number-pad"
                                 onChangeText={text => this.setState({price: text})}
-                                placeholder={"Product Price..."}></TextInput>
+                                placeholder={"Product Price..."}>{this.state.price}</TextInput>
                         </View>
                         <View style={styles.inputBox}>
                             <Text style={{ fontSize: 18 }}>Description</Text>
                             <TextInput style={styles.inputTextAdd} 
                             onChangeText={text => this.setState({description: text})}
-                            placeholder={"Product Description..."}></TextInput>
+                            placeholder={"Product Description..."}>{this.state.description}</TextInput>
                         </View>
                         {/* <View style={styles.inputBox}>
                         <Text style={{ fontSize: 18 }}>Image</Text>
@@ -129,7 +144,7 @@ class AddProduct extends Component {
                                 </TouchableOpacity>
                             </View>
                             <TouchableOpacity style={[styles.buttonAddProduct, { alignSelf: 'center', width: 100, backgroundColor: 'rgb(45, 173, 78)', marginRight: 20, marginBottom: 20 }]} onPress={() => this.save()}>
-                                <Text style={[styles.loginText, { color: 'white' }]}>Add</Text>
+                                <Text style={[styles.loginText, { color: 'white' }]}>Edit</Text>
                             </TouchableOpacity>
                         </View>
                     </ScrollView>
@@ -145,4 +160,4 @@ const mapStateToProps = state => {
         store_product: state.store_product,
     }
 }
-export default connect(mapStateToProps)(AddProduct);
+export default connect(mapStateToProps)(EditProduct);

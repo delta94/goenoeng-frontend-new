@@ -21,6 +21,8 @@ export default user = (state = initialState, action) => {
         case 'FECTH_PARTNER_PENDING':
         case 'UPDATE_USER_PENDING':
         case 'FECTH_USER_PENDING':
+        case 'ADD_PRODUCT_PENDING':
+        case 'ADD_TRANSACTION_PENDING':
             return {
                 ...state,
                 isLoading: true,
@@ -31,6 +33,8 @@ export default user = (state = initialState, action) => {
         case 'FECTH_PARTNER_REJECTED':
         case 'UPDATE_USER_REJECTED':
         case 'FECTH_USER_REJECTED':
+        case 'ADD_PRODUCT_REJECTED':
+        case 'ADD_TRANSACTION_REJECTED':
             return {
                 ...state,
                 isLoading: false,
@@ -61,6 +65,13 @@ export default user = (state = initialState, action) => {
                 image: action.payload.data.data.image,
                 description: action.payload.data.data.description
             }
+        case 'ADD_PRODUCT_FULFILLED':
+            // console.log(action.payload)
+            return {
+                ...state,
+                isLoading: false,
+                product: action.payload.data.data.products
+            }
         case 'UPDATE_USER_FULFILLED':
             // console.log(action.payload)
             return {
@@ -89,6 +100,11 @@ export default user = (state = initialState, action) => {
                 image: action.payload.data.data.image,
                 description: action.payload.data.data.description,
                 gender: action.payload.data.data.gender
+            }
+        case 'ADD_TRANSACTION_FULFILLED':
+            return {
+                ...state,
+                transactionData: action.payload.data.data
             }
         default:
             return state

@@ -5,7 +5,7 @@ import { withNavigation } from 'react-navigation';
 import { Picker, Form, Container, Header, Left, Body, Right, Button, Icon, Title, Thumbnail, Footer, FooterTab } from 'native-base';
 // import ImagePicker from 'react-native-image-picker';
 import { connect } from 'react-redux';
-import { registerUser } from '../../public/redux/actions/user';
+import { register } from '../../public/redux/actions/user';
 
 class User extends Component {
 	state = {
@@ -193,7 +193,7 @@ class User extends Component {
 		else{
 
 		const { email, password, name, address, phone, level } = this.state;
-		this.props.dispatch(registerUser(email, password, name, address, phone, level))
+		this.props.dispatch(register(email, password, name, address, phone, level))
 			.then(() => {
 				this.props.navigation.navigate('Home')
 			}, function (error) {

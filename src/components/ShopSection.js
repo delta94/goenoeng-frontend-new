@@ -39,7 +39,7 @@ class ShopSectionlist extends Component {
                         <Text>{item.partner.address}</Text>
                         <FlatList
                             // style={{flex: 3, flexDirection: "row", justifyContent: 'space-around', width:'100%'}}
-                            data={item.products}
+                            data={item.products.slice(0,3)}
                             renderItem={this.renderItem}
                             numColumns={3}
                         />
